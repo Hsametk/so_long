@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:10:06 by hakotu            #+#    #+#             */
-/*   Updated: 2025/01/28 14:48:41 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/03 17:27:08 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *extract_line(char *line)
 		i++;
 	if (line[i] == '\0' || line[1] == '\0')
 		return (0);
-	backup = ft_substr(line, i + 1, ft_strlen(line) - i);
+	backup = ft_substr(line, i + 1, ft_strlen_two(line) - i);
 	if (*backup == '\0')
 	{
 		free(backup);

@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/01/29 16:23:07 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/03 16:35:36 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 #include "fcntl.h"
 #include "stdio.h"
 //to-do
-static void	check_file(t_data *map)
+static void	check_file(t_state *map)
 {
 	size_t	len;
 
-	len = ft_strlen(map->filename);
-	if (map->filename[len - 1] != 'r')
+	len = ft_strlen(map->map.filename);
+	if (map->map.filename[len - 1] != 'r')
 		error_filename();
-	if (map->filename[len - 2] != 'e')
+	if (map->map.filename[len - 2] != 'e')
 		error_filename();
-	if (map->filename[len - 3] != 'b')
+	if (map->map.filename[len - 3] != 'b')
 		error_filename();
-	if (map->filename[len - 4] != '.')
+	if (map->map.filename[len - 4] != '.')
 		error_filename();
 	// if (!ft_strnstr(map->filename, ".ber", ft_strlen(map->filename)))
 	// 	error_filename();
 }
-void read_map(char *map, t_data *my_map)
+void read_map(char *map, t_state *my_map)
 {
     char    **arr;
     int     fd;
@@ -50,7 +50,7 @@ void read_map(char *map, t_data *my_map)
         free(line);
     }
     close(fd);
-    my_map->column_len = line_count;    
+    my_map->map.height = line_count;    
     // Bellek ayır ve dosyayı yeniden aç
     arr = malloc(sizeof(char *) * (line_count + 1));
     if (!arr) {
@@ -71,53 +71,27 @@ void read_map(char *map, t_data *my_map)
         free(line);
         j++;
     }
-    my_map->row_len = ft_strlen(line);
+    my_map->map.width = ft_strlen(line);
     arr[j] = NULL; // Sonlandırıcı ekle
     close(fd);
 
-    my_map->map_details = arr; 
+    my_map->map.board = arr; 
 }
 
 //to-do
-void    is_map_valid(t_data *my_map)
-{
-    int i;
-    int j;
-    t_data map_check;
-    i = 0;
-    while (map_check.map_details[i] != NULL)
-    {
-        while (map_check.map_details[i][j] != NULL)
-        {
-            if (map_check.map_details[0][j] != '1')
-            {
-                perror("Invalid map!!");
-                exit(EXIT_FAILURE);
-            }
-            if (map_check.map_details[map_check.column_len][j] != '1')
-            {
-                perror("Invalid map!!!");
-                exit(EXIT_FAILURE);
-            }
-            if (map_check.map_details[i][0] != '1' && map_check.map_details[i][map_check.row_len] != '1')
-            {
-                perror("Invalid mapp!!!");
-                exit(EXIT_FAILURE);
-            }
-            if (map_check.map_details[i][j] == 'P')
-            {
-                map_check.
-            }
-            
-        }
-    }
-}
+// void    is_map_valid(t_state *my_map)
+// {
+//     int i;
+//     int j;
+    
+// }
 
-void map_checker(char *map, t_data *my_map)
+void map_checker(char *map, t_state *my_map)
 {
     check_file(my_map);
     read_map(map, my_map);
-    is_map_valid(my_map); //to-do
+    //flood_fill();
+    //is_map_valid(my_map); //to-do
 }
 /*
     is_map_valid 

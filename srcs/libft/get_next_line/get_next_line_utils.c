@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:21:22 by hakotu            #+#    #+#             */
-/*   Updated: 2025/01/24 17:09:10 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/03 17:28:56 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strdup_two(const char *s1)
 	char	*dest;
 	size_t	i;
 
-	dest = (char *) malloc(ft_strlen(s1) + 1);
+	dest = (char *) malloc(ft_strlen_two(s1) + 1);
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -45,7 +45,7 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)&s[i]);
 	return (NULL);
 }
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_two(const char *s)
 {
 	size_t	i;
 
@@ -62,7 +62,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	new_s = (char *) malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	new_s = (char *) malloc((ft_strlen_two(s1) + ft_strlen_two(s2) + 1) * sizeof(char));
 	if (!new_s)
 		return (NULL);
 	while (s1[i])
@@ -86,10 +86,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (start > ft_strlen(s))
+	if (start > ft_strlen_two(s))
 		return (ft_strdup_two(""));
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
+	if (len > ft_strlen_two(s + start))
+		len = ft_strlen_two(s + start);
 	str = (char *) malloc((sizeof(char) * len) + 1);
 	if (!str)
 		return (NULL);

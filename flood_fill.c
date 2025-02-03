@@ -1,10 +1,10 @@
 #include "so_long.h"
 
 // Recursive function to flood fill an area of a 2D character array
-void fill(char **tab, t_point size, char target, int row, int col)
+void fill(char **tab, t_state size, char target, int row, int col)
 {
     // Check if current row and column values are out of bounds
-    if (row < 0 || col < 0 || row >= size.y || col >= size.x)
+    if (row < 0 || col < 0 || row >= size.player.y || col >= size.player.x)
         return;
     
     // Check if current cell has already been filled or does not match the target character
@@ -22,8 +22,8 @@ void fill(char **tab, t_point size, char target, int row, int col)
 }
 
 // Function to initiate flood fill from a specified point
-void flood_fill(char **tab, t_point size, t_point begin)
+void flood_fill(char **tab, t_state size, t_state begin)
 {
-    char target = tab[begin.y][begin.x]; // Get the character to fill around
-    fill(tab, size, target, begin.y, begin.x); // Start the flood fill from the specified point
+    char target = tab[begin.player.y][begin.player.x]; // Get the character to fill around
+    fill(tab, size, target, begin.player.y, begin.player.x); // Start the flood fill from the specified point
 }
