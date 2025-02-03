@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "so_long": "c"
+    },
+    "makefile.configureOnOpen": true
+}
