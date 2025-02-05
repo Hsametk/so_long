@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/03 17:24:13 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 11:19:21 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,6 @@
 #include <fcntl.h>
 #include "so_long.h"
 
-// int main(int argc, char *argv[])
-// {
-//     void *mlx_connection;
-//     void *mlx_window;
-//     void *mlx_new_img;
-//     int x = 500;
-//     int y = 500;
-//     (void)argc; // ??????????
-//     t_state my_map;
-//     my_map.map->filename = argv[1];
-//     map_checker(my_map.map->filename, &my_map);
-
-//     int i = 0;
-//     while (my_map.map->board[i] != NULL) {
-//         ft_printf("%s", my_map.map->board[i]);
-//         free(my_map.map->board[i]);
-//         i++;
-//     }
-//     free(my_map.map->board);
-
-//     mlx_connection = mlx_init();
-//     if (!mlx_connection) {
-//         perror("Failed to initialize MLX");
-//         return EXIT_FAILURE;
-//     }
-
-//     mlx_window = mlx_new_window(mlx_connection, 500, 500, "ilk pencerem");
-//     if (!mlx_window) {
-//         perror("Failed to create MLX window");
-//         return EXIT_FAILURE;
-//     }
-
-//     mlx_new_img = mlx_xpm_file_to_image(mlx_connection, "character.xpm", &x, &y);
-//     if (!mlx_new_img) {
-//         perror("Failed to load XPM image");
-//         return EXIT_FAILURE;
-//     }
-
-//     mlx_put_image_to_window(mlx_connection, mlx_window, mlx_new_img, 100, 100);
-
-
-//     mlx_loop(mlx_connection);
-
-//     return 0;
-// }
 int main(int argc, char *argv[]) {
     // Argüman sayısı kontrolü
     if (argc != 2) {
@@ -68,20 +23,20 @@ int main(int argc, char *argv[]) {
     }
 
     // `my_map.map` doğrudan bir struct olarak kullanılıyor
-    t_state my_map;
-    my_map.map.filename = argv[1]; // Dosya adı alınır
+    t_state state;
+    state.map.filename = argv[1]; // Dosya adı alınır
 
     // Harita kontrolü
-    map_checker(my_map.map.filename, &my_map);
+    map_checker(state.map.filename, &state);
 
     // Harita board'ını yazdırma ve serbest bırakma
     int i = 0;
-    while (my_map.map.board[i] != NULL) {
-        ft_printf("%s", my_map.map.board[i]);
-        free(my_map.map.board[i]); // Eğer `board` malloc ile ayrıldıysa
+    while (state.map.board[i] != NULL) {
+        ft_printf("%s", state.map.board[i]);
+        free(state.map.board[i]); // Eğer `board` malloc ile ayrıldıysa
         i++;
     }
-    free(my_map.map.board); // `board`'u serbest bırak
+    free(state.map.board); // `board`'u serbest bırak
 
     // MLX başlatma
     void *mlx_connection = mlx_init();
