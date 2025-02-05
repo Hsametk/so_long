@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 12:45:35 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 15:54:18 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
     // MLX penceresi oluşturma
-    state.win = mlx_new_window(state.mlx, 500, 500, "ilk pencerem");
+    state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
     if (!state.win) {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;

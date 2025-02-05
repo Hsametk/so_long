@@ -52,6 +52,8 @@ typedef struct s_imgs
 	void	*e;
 	void	*p;
 	void	*c;
+	void	*w;
+
 }			t_imgs;
 
 // typedef struct s_state
