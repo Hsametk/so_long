@@ -80,5 +80,7 @@ void	flood_fill(char **tab, t_state size, t_state begin);
 void	read_map(char *map, t_state *my_map);
 void map_error();
 void error_filename(void);
+char **copy_map(char **original, int height);
+void free_map(char **map, int height);
 
 #endif

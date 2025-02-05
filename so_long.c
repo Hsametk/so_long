@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 11:19:21 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 12:45:35 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,53 +21,40 @@ int main(int argc, char *argv[]) {
         ft_printf("Usage: ./so_long <map_file>\n");
         return EXIT_FAILURE;
     }
-
     // `my_map.map` doğrudan bir struct olarak kullanılıyor
     t_state state;
     state.map.filename = argv[1]; // Dosya adı alınır
-
     // Harita kontrolü
     map_checker(state.map.filename, &state);
-
-    // Harita board'ını yazdırma ve serbest bırakma
-    int i = 0;
-    while (state.map.board[i] != NULL) {
-        ft_printf("%s", state.map.board[i]);
-        free(state.map.board[i]); // Eğer `board` malloc ile ayrıldıysa
-        i++;
-    }
-    free(state.map.board); // `board`'u serbest bırak
-
     // MLX başlatma
-    void *mlx_connection = mlx_init();
-    if (!mlx_connection) {
+    state.mlx = mlx_init();
+    if (!state.mlx) {
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
-
     // MLX penceresi oluşturma
-    void *mlx_window = mlx_new_window(mlx_connection, 500, 500, "ilk pencerem");
-    if (!mlx_window) {
+    state.win = mlx_new_window(state.mlx, 500, 500, "ilk pencerem");
+    if (!state.win) {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
-
     // XPM görüntüsü yükleme
     int x = 500, y = 500;
-    void *mlx_new_img = mlx_xpm_file_to_image(mlx_connection, "character.xpm", &x, &y);
+    void *mlx_new_img = mlx_xpm_file_to_image(state.mlx, "character.xpm", &x, &y);
     if (!mlx_new_img) {
         perror("Failed to load XPM image");
         return EXIT_FAILURE;
     }
 
     // Görüntüyü pencereye yerleştirme
-    mlx_put_image_to_window(mlx_connection, mlx_window, mlx_new_img, 100, 100);
+    mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
 
     // MLX döngüsünü başlatma
-    mlx_loop(mlx_connection);
+    mlx_loop(state.mlx);
 
     return 0;
 }
+
 
 /*
 to-dos

@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 11:28:11 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 12:42:26 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,31 +77,7 @@ void read_map(char *map, t_state *my_map)
 
     my_map->map.board = arr; 
 }
-char **copy_map(char **original, int height)
-{
-    char **copy = malloc(sizeof(char *) * (height + 1));
-    if (!copy)
-        return NULL;
 
-    for (int i = 0; i < height; i++)
-    {
-        copy[i] = strdup(original[i]);
-        if (!copy[i])
-        {
-            free_map(copy, i); // Hata durumunda temizleme
-            return NULL;
-        }
-    }
-    copy[height] = NULL;
-    return copy;
-}
-
-void free_map(char **map, int height)
-{
-    for (int i = 0; i < height; i++)
-        free(map[i]);
-    free(map);
-}
 void map_checker(char *map, t_state *state)
 {   
     char **map_copy = copy_map(state->map.board, state->map.height);
@@ -119,7 +95,7 @@ void map_checker(char *map, t_state *state)
     read_map(map, state);
     flood_fill(map_copy, *state, begin);
     //is_map_valid(my_map); //to-do
-    free_map(map_copy, state->map.height);
+    //free_map(map_copy, state->map.height);
 }
 /*
     is_map_valid 
