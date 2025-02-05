@@ -84,5 +84,7 @@ void map_error();
 void error_filename(void);
 char **copy_map(char **original, int height);
 void free_map(char **map, int height);
+void	put_image(t_state *state);
+void	put_screen(t_state *state, int x, int y);
 
 #endif

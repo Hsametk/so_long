@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:28:08 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 15:54:19 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:07:53 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	put_screen(t_state *state, int x, int y, int i)
     int j;
     
     i = 0;
+    j = 0;
+    
     while (state->map.board[i])
     {
         while (state->map.board[i][j])

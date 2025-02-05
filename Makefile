@@ -56,7 +56,7 @@ FT_PRINTF_LIB_FLAGS=-L $(FT_PRINTF_PATH) -lftprintf -I $(FT_PRINTF_PATH)
 FT_LIBFT_LIB_FLAGS=-L $(LIBFT_PATH) -lft -I $(LIBFT_PATH)
 
 # Source File
-SRC=so_long.c checker.c errors.c flood_fill.c
+SRC=so_long.c checker.c errors.c flood_fill.c create_image.c
 
 # Targets
 all: $(NAME)

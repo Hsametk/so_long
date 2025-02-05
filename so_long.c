@@ -6,11 +6,10 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 15:54:18 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/05 17:22:59 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include "so_long.h"
@@ -32,22 +31,24 @@ int main(int argc, char *argv[]) {
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
-    // MLX penceresi oluşturma
+    // // MLX penceresi oluşturma
     state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
     if (!state.win) {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
-    // XPM görüntüsü yükleme
-    int x = 500, y = 500;
-    void *mlx_new_img = mlx_xpm_file_to_image(state.mlx, "character.xpm", &x, &y);
-    if (!mlx_new_img) {
-        perror("Failed to load XPM image");
-        return EXIT_FAILURE;
-    }
+    put_image(&state);
+    put_screen(&state, state.map.width, state.map.height);
+    // // XPM görüntüsü yükleme
+    // int x = 500, y = 500;
+    // void *mlx_new_img = mlx_xpm_file_to_image(state.mlx, "character.xpm", &x, &y);
+    // if (!mlx_new_img) {
+    //     perror("Failed to load XPM image");
+    //     return EXIT_FAILURE;
+    // }
 
     // Görüntüyü pencereye yerleştirme
-    mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
+    //mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
 
     // MLX döngüsünü başlatma
     mlx_loop(state.mlx);
@@ -62,7 +63,6 @@ to-dos
 Map kontrolünü yap.
 kontroller
 -----------
-3- map dosyasının uzantısı .ber olmalı. argüman alırken checkle //yazdım ama kontrol et
 1- map valid mi yani çevresi 1 lerden oluşuyor mu. //to-do
 2- 1 karakter ve 1 çıkış olmalı. en az 1 tane toplanabilir nesne olmalı.
 4- oyuncu çıkışa gidebiliyor mu önünde bir engel var mı?
