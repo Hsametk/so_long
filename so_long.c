@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/06 12:50:54 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/06 13:30:17 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,9 @@ Map'in boyutu.
 ** Haraket sayısını pencereye yazdır.
 
 ** memory leakleri check et˙
+
+** flood fill de null varsa F koyma neye F koyacağını belirt.
+
+** Ekran boyutundan büyük window açma
+
 */
