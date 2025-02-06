@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "so_long": "c",
-        "so_long.h": "c"
+        "so_long.h": "c",
+        "random": "c"
     },
     "makefile.configureOnOpen": true
 }

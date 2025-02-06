@@ -6,12 +6,10 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 17:22:59 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/06 12:50:54 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <fcntl.h>
 #include "so_long.h"
 
 int main(int argc, char *argv[]) {
@@ -32,13 +30,15 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
     // // MLX penceresi oluşturma
+    state.map.height = 192;
+    state.map.width = 1088;
     state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
     if (!state.win) {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
     put_image(&state);
-    put_screen(&state, state.map.width, state.map.height);
+    put_screen(&state);
     // // XPM görüntüsü yükleme
     // int x = 500, y = 500;
     // void *mlx_new_img = mlx_xpm_file_to_image(state.mlx, "character.xpm", &x, &y);
@@ -70,7 +70,9 @@ kontroller
 Map'in boyutu.
 6- 
 
-** Kontroller bittikten sonra window açılmalı sonrasında harita ekrana yazdırılmalı.
+** Windowun boyutunu otomatik hesapla ve struct a ata.
+
+** todo player ın ve ezit in x y sini structa ata
 
 ** Hookları entegre et mouse ve klayve entegresi.
 
@@ -84,4 +86,5 @@ Map'in boyutu.
 
 ** Haraket sayısını pencereye yazdır.
 
+** memory leakleri check et˙
 */

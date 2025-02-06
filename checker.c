@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/05 17:23:18 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/06 12:14:55 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void map_checker(char *map, t_state *state)
     char **map_copy = copy_map(state->map.board, state->map.height);
     if (!map_copy)
     {
-        printf("Error: Map copy failed.\n");
+        ft_printf("Error: Map copy failed.\n");
         exit(EXIT_FAILURE);
     }
 

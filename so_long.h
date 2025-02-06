@@ -6,6 +6,9 @@
 #include "srcs/minilibx-linux/mlx.h"
 #include "srcs/libft/libft.h"
 #include "srcs/ft_printf/ft_printf.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 // typedef struct s_data
 // {
@@ -53,6 +56,8 @@ typedef struct s_imgs
 	void	*p;
 	void	*c;
 	void	*w;
+	void	*f;
+
 
 }			t_imgs;
 
@@ -85,6 +90,6 @@ void error_filename(void);
 char **copy_map(char **original, int height);
 void free_map(char **map, int height);
 void	put_image(t_state *state);
-void	put_screen(t_state *state, int x, int y);
+void	put_screen(t_state *state);
 
 #endif
