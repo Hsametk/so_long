@@ -50,7 +50,7 @@ MINILIBX=$(MINILIBX_PATH)/libmlx.a
 
 # Compilation Flags
 CC=cc
-CFLAGS=-Wall -Wextra -Werror #-fsanitize=address
+CFLAGS=-Wall -Wextra -Werror -fsanitize=address
 LIB_FLAGS=-L $(MINILIBX_PATH) -lmlx -lm -lXext -lX11
 FT_PRINTF_LIB_FLAGS=-L $(FT_PRINTF_PATH) -lftprintf -I $(FT_PRINTF_PATH)
 FT_LIBFT_LIB_FLAGS=-L $(LIBFT_PATH) -lft -I $(LIBFT_PATH)
