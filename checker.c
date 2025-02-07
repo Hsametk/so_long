@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/06 12:14:55 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/07 16:32:10 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,101 @@ void map_checker(char *map, t_state *state)
     check_file(state);
     read_map(map, state);
     flood_fill(map_copy, *state, begin);
-    //is_map_valid(my_map); //to-do
+   // is_map_valid(state); //to-do
+    map_size(state);
     //free_map(map_copy, state->map.height);
 }
+// void is_map_valid(t_state *state)
+// {
+//     int i;
+//     int j;
+
+//     i = 0;
+//     while (state->map.board[i])
+//     {
+//         while (state->map.board[i][j])
+//         {
+//             if (state->map.board[i][j] == 'P')
+//             {
+//                 state->player.x = i;
+//                 state->player.y = j;
+//             }
+            
+//         }
+        
+//     }
+    
+//}
+
+void game_map_locations(t_state *state)
+{
+    int i;
+    int j;
+    i = 0;
+    while (state->map.board[i])
+    {
+        j = 0;
+        while (state->map.board[i][j])
+        {
+            if (state->map.board[i][j] == 'P')
+            {
+                state->player.x = i;
+                state->player.y = j;
+            }
+            if (state->map.board[i][j] == 'E')
+            {
+                state->exit.x = i;
+                state->exit.y = j;
+            }
+            if (state->map.board[i][j] == 'C')
+            {
+                state->collectibles += 1;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+// void map_size(t_state *state)
+// {
+//     int i;
+//     int j;
+
+//     i = 0;
+//     j = 0;
+//     state->map.height = 0;
+//     state->map.width = 0;
+//     while (state->map.board[i])
+//         i++;
+//     state->map.height = i * 32;
+//     while (state->map.board[i][j])
+//         j++;
+//     state->map.width = j * 32;
+// }
+
+void map_size(t_state *state)
+{
+    int i;
+    int j;
+
+    if (!state || !state->map.board)
+        return;
+
+    i = 0;
+    state->map.height = 0;
+    state->map.width = 0;
+    while (state->map.board[i])
+    {
+        j = 0;
+        while (state->map.board[i][j])
+            j++;
+        if (j > state->map.width)
+            state->map.width = (j * 32) - 32;
+        i++;
+    }
+    state->map.height = i * 32;
+}
+
 /*
     is_map_valid 
 

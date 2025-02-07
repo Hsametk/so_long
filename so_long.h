@@ -91,5 +91,6 @@ char **copy_map(char **original, int height);
 void free_map(char **map, int height);
 void	put_image(t_state *state);
 void	put_screen(t_state *state);
-
+void game_map_locations(t_state *state);
+void map_size(t_state *state);
 #endif
