@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/07 17:11:15 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/07 17:57:14 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
     // mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
 
     // MLX döngüsünü başlatma
+    mlx_key_hook(state.win, &handle_key, state.mlx);
+    mlx_hook(state.win, 17, 0, &dest_win, NULL);
     mlx_loop(state.mlx);
 
     return 0;

@@ -10,6 +10,14 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+# define KEY_ESC    65307
+
+
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
+# define KEY_W		119
+
 // typedef struct s_data
 // {
 // 	void		*mlx_ptr; // MLX pointer
@@ -60,16 +68,6 @@ typedef struct s_imgs
 
 } t_imgs;
 
-// typedef struct s_state
-// {
-// 	void		*mlx;
-// 	void		*win;
-// 	t_map		*map;
-// 	t_player	player;
-// 	t_imgs		imgs;
-// 	int			collectibles;
-// 	t_exit		exit;
-// }	t_state;
 typedef struct s_state
 {
 	void *mlx;
@@ -92,4 +90,7 @@ void put_image(t_state *state);
 void put_screen(t_state *state);
 void game_map_locations(t_state *state);
 void map_size(t_state *state);
+int handle_key(int key);
+int dest_win();
+
 #endif

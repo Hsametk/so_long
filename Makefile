@@ -50,13 +50,13 @@ MINILIBX=$(MINILIBX_PATH)/libmlx.a
 
 # Compilation Flags
 CC=cc
-CFLAGS=-Wall -Wextra -Werror #-fsanitize=address
+CFLAGS=-Wall -Wextra -Werror -fsanitize=address
 LIB_FLAGS=-L $(MINILIBX_PATH) -lmlx -lm -lXext -lX11
 FT_PRINTF_LIB_FLAGS=-L $(FT_PRINTF_PATH) -lftprintf -I $(FT_PRINTF_PATH)
 FT_LIBFT_LIB_FLAGS=-L $(LIBFT_PATH) -lft -I $(LIBFT_PATH)
 
 # Source File
-SRC=so_long.c checker.c errors.c flood_fill.c create_image.c
+SRC=so_long.c checker.c errors.c flood_fill.c create_image.c key_hook.c
 
 # Targets
 all: $(NAME)
