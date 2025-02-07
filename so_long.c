@@ -6,15 +6,17 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/07 16:23:13 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/07 17:11:15 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     // Argüman sayısı kontrolü
-    if (argc != 2) {
+    if (argc != 2)
+    {
         ft_printf("Usage: ./so_long <map_file>\n");
         return EXIT_FAILURE;
     }
@@ -25,15 +27,15 @@ int main(int argc, char *argv[]) {
     map_checker(state.map.filename, &state);
     // MLX başlatma
     state.mlx = mlx_init();
-    if (!state.mlx) {
+    if (!state.mlx)
+    {
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
     // // MLX penceresi oluşturma
-    // state.map.height = 192;
-    // state.map.width = 1088;
     state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
-    if (!state.win) {
+    if (!state.win)
+    {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
@@ -48,14 +50,13 @@ int main(int argc, char *argv[]) {
     // }
 
     // Görüntüyü pencereye yerleştirme
-    //mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
+    // mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
 
     // MLX döngüsünü başlatma
     mlx_loop(state.mlx);
 
     return 0;
 }
-
 
 /*
 to-dos
@@ -68,7 +69,7 @@ kontroller
 4- oyuncu çıkışa gidebiliyor mu önünde bir engel var mı?
 5- map in bilgileri linkled list e atanmalı. Collactable sayısı, exit sayısı, player sayısı.
 Map'in boyutu.
-6- 
+6-
 
 ** Windowun boyutunu otomatik hesapla ve struct a ata.
 

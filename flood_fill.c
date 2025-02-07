@@ -23,7 +23,7 @@ void fill(char **tab, t_state size, char target, int row, int col)
 void flood_fill(char **tab, t_state size, t_state begin)
 {
     // Başlangıç koordinatları sınır dışıysa durdur
-    if (!tab || begin.player.y < 0 || begin.player.x < 0 || 
+    if (!tab || begin.player.y < 0 || begin.player.x < 0 ||
         begin.player.y >= size.player.y || begin.player.x >= size.player.x || !tab[begin.player.y])
         return;
 
@@ -35,7 +35,7 @@ void flood_fill(char **tab, t_state size, t_state begin)
 
     // Flood fill başlat
     fill(tab, size, target, begin.player.y, begin.player.x);
-    //ft_printf("Floood başarili.");
+    // ft_printf("Floood başarili.");
 }
 
 char **copy_map(char **original, int height)
@@ -52,7 +52,7 @@ char **copy_map(char **original, int height)
             free_map(copy, i); // Hata durumunda temizleme
             return NULL;
         }
-    } 
+    }
     copy[height] = NULL;
     return copy;
 }

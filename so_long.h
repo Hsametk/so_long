@@ -30,36 +30,35 @@
 
 typedef struct s_map
 {
-	char	*path;
-	int		width;
-	int		height;
-	char	**board;
-	char	*filename;
-}				t_map;
+	char *path;
+	int width;
+	int height;
+	char **board;
+	char *filename;
+} t_map;
 
 typedef struct s_player
 {
-	int	x;
-	int	y;
-	int	moves;
-}			t_player;
+	int x;
+	int y;
+	int moves;
+} t_player;
 
 typedef struct s_exit
 {
-	int	x;
-	int	y;
-}			t_exit;
+	int x;
+	int y;
+} t_exit;
 
 typedef struct s_imgs
 {
-	void	*e;
-	void	*p;
-	void	*c;
-	void	*w;
-	void	*f;
+	void *e;
+	void *p;
+	void *c;
+	void *w;
+	void *f;
 
-
-}			t_imgs;
+} t_imgs;
 
 // typedef struct s_state
 // {
@@ -73,24 +72,24 @@ typedef struct s_imgs
 // }	t_state;
 typedef struct s_state
 {
-    void        *mlx;
-    void        *win;
-    t_map       map; // Pointer yerine doğrudan struct
-    t_player    player;
-    t_imgs      imgs;
-    int         collectibles;
-    t_exit      exit;
-}   t_state;
+	void *mlx;
+	void *win;
+	t_map map; // Pointer yerine doğrudan struct
+	t_player player;
+	t_imgs imgs;
+	int collectibles;
+	t_exit exit;
+} t_state;
 
-void	map_checker(char *map, t_state *my_map);
-void	flood_fill(char **tab, t_state size, t_state begin);
-void	read_map(char *map, t_state *my_map);
+void map_checker(char *map, t_state *my_map);
+void flood_fill(char **tab, t_state size, t_state begin);
+void read_map(char *map, t_state *my_map);
 void map_error();
 void error_filename(void);
 char **copy_map(char **original, int height);
 void free_map(char **map, int height);
-void	put_image(t_state *state);
-void	put_screen(t_state *state);
+void put_image(t_state *state);
+void put_screen(t_state *state);
 void game_map_locations(t_state *state);
 void map_size(t_state *state);
 #endif
