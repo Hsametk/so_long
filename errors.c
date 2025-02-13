@@ -11,8 +11,8 @@ void error_message_for_counter(char *str)
 {
     while (*str != '\0')
     {
-        write(1, *str, 1);
+        write(1, str, 1);
         str++;
     }
-    return(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
 }

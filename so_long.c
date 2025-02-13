@@ -28,12 +28,16 @@ int main(int argc, char *argv[])
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
-    state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
+    state.win = mlx_new_window(state.mlx, state.map.map_size_width, state.map.map_size_height, "./so_long");
     if (!state.win)
     {
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
+    ft_printf("%d\n",state.map.height);
+    ft_printf("%d\n",state.map.width);
+    ft_printf("%d\n",state.map.map_size_height);
+    ft_printf("%d\n",state.map.map_size_width);
     put_image(&state);
     put_screen(&state);
     mlx_key_hook(state.win, &handle_key, state.mlx);

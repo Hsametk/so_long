@@ -146,10 +146,10 @@ void map_size(t_state *state)
 		while (state->map.board[i][j])
 			j++;
 		if (j > state->map.width)
-			state->map.width = (j * 32) - 32;
+			state->map.map_size_width = (j * 32) - 32;
 		i++;
 	}
-	state->map.height = i * 32; 
+	state->map.map_size_height = i * 32; 
 }
 
 /*

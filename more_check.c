@@ -15,14 +15,16 @@
 void wall_control(t_state *state)
 {
     int     i;
-    
+    ft_printf("%d\n",state->map.height);
+    ft_printf("%d\n",state->map.width);
+
     i = 0;
     while (i < state->map.width)
     {
         if (state->map.board[0][i] != '1' || state->map.board[state->map.height -1][i] != '1')
         {
             perror("İncorrect map element.");
-            return EXIT_FAILURE;
+            exit(EXIT_FAILURE);
         }
         i++;
     }
@@ -32,7 +34,7 @@ void wall_control(t_state *state)
         if (state->map.board[i][0] != '1' || state->map.board[i][state->map.width -1] != '1')
         {
             perror("İncorrect map element.");
-            return EXIT_FAILURE;
+            exit(EXIT_FAILURE);
         }
         i++;   
     }    
@@ -51,7 +53,7 @@ void is_space(t_state *state)
             if (state->map.board[i][j] == '\n')
             {
                 perror("There is a space on the map.");
-                return EXIT_FAILURE;
+                exit(EXIT_FAILURE);
             }
             j++;
         }
@@ -72,7 +74,7 @@ void	is_missing(t_state *state)
 		if (a != state->map.height)
         {
 			perror("There is a problem with the map");
-            return EXIT_FAILURE;
+            exit(EXIT_FAILURE);
         }
 		i++;
     }
@@ -92,7 +94,7 @@ void is_any_char(t_state *state)
                 state->map.board[i][j] != '0' || state->map.board[i][j] != '1')
             {
                 perror("There is a misplaced character on the map.");
-                return EXIT_FAILURE;
+                exit(EXIT_FAILURE);
             }
             j++;
         }

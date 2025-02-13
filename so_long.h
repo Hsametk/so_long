@@ -38,11 +38,13 @@
 
 typedef struct s_map
 {
-	char *path;
-	int width;
-	int height;
-	char **board;
-	char *filename;
+	char 	*path;
+	int 	width;
+	int 	height;
+	char	**board;
+	char	*filename;
+	int		map_size_width;
+	int		map_size_height;
 } t_map;
 
 typedef struct s_player
