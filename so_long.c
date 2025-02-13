@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/07 17:57:14 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/13 11:06:17 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,20 @@
 
 int main(int argc, char *argv[])
 {
-    // Argüman sayısı kontrolü
     if (argc != 2)
     {
         ft_printf("Usage: ./so_long <map_file>\n");
         return EXIT_FAILURE;
     }
-    // `my_map.map` doğrudan bir struct olarak kullanılıyor
     t_state state;
-    state.map.filename = argv[1]; // Dosya adı alınır
-    // Harita kontrolü
+    state.map.filename = argv[1];
     map_checker(state.map.filename, &state);
-    // MLX başlatma
     state.mlx = mlx_init();
     if (!state.mlx)
     {
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
-    // // MLX penceresi oluşturma
     state.win = mlx_new_window(state.mlx, state.map.width, state.map.height, "./so_long");
     if (!state.win)
     {
@@ -41,18 +36,6 @@ int main(int argc, char *argv[])
     }
     put_image(&state);
     put_screen(&state);
-    // // XPM görüntüsü yükleme
-    // int x = 500, y = 500;
-    // void *mlx_new_img = mlx_xpm_file_to_image(state.mlx, "character.xpm", &x, &y);
-    // if (!mlx_new_img) {
-    //     perror("Failed to load XPM image");
-    //     return EXIT_FAILURE;
-    // }
-
-    // Görüntüyü pencereye yerleştirme
-    // mlx_put_image_to_window(state.mlx, state.win, mlx_new_img, 100, 100);
-
-    // MLX döngüsünü başlatma
     mlx_key_hook(state.win, &handle_key, state.mlx);
     mlx_hook(state.win, 17, 0, &dest_win, NULL);
     mlx_loop(state.mlx);
@@ -62,7 +45,7 @@ int main(int argc, char *argv[])
 
 /*
 to-dos
-!!!!!! perror ve exit fonksiyonlarını araştır ilk olarak. !!!!!!
+
 Map kontrolünü yap.
 kontroller
 -----------
@@ -73,7 +56,6 @@ kontroller
 Map'in boyutu.
 6-
 
-** Windowun boyutunu otomatik hesapla ve struct a ata.
 
 ** todo player ın ve ezit in x y sini structa ata
 
@@ -85,14 +67,14 @@ Map'in boyutu.
 
 ** Çıkışa geldiğinde collactable değişkeninin 0 olması durumunda çık ve window u kapat.
 
-** Çarpıya ve esc ye basılınca window u kapat.
-
-** Haraket sayısını pencereye yazdır.
+** Haraket sayısını shell e yazdır.
 
 ** memory leakleri check et˙
 
 ** flood fill de null varsa F koyma neye F koyacağını belirt.
 
-** Ekran boyutundan büyük window açma
+** Ekran boyutundan büyük window açma (bunun için mlx in içerisende fonksiyon varmış bak)
+
+** collactable ın üzerine gelince haritanın değerini değiştir fonksiyonu tekrar çağır ve bas.
 
 */

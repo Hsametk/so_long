@@ -91,6 +91,10 @@ void put_screen(t_state *state);
 void game_map_locations(t_state *state);
 void map_size(t_state *state);
 int handle_key(int key);
-int dest_win();
-
+int dest_win(); //??
+void wall_control(t_state *state);
+void	cpe_counter(t_state *state);
+void	is_missing(t_state *state);
+void is_any_char(t_state *state);
+void error_message_for_counter(char *str);
 #endif

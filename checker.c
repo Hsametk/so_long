@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/07 17:15:58 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/13 11:00:38 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static void check_file(t_state *map)
 		error_filename();
 	if (map->map.filename[len - 4] != '.')
 		error_filename();
-	// if (!ft_strnstr(map->filename, ".ber", ft_strlen(map->filename)))
-	// 	error_filename();
 }
 void read_map(char *map, t_state *my_map)
 {
@@ -102,28 +100,6 @@ void map_checker(char *map, t_state *state)
 	map_size(state);
 	// free_map(map_copy, state->map.height);
 }
-// void is_map_valid(t_state *state)
-// {
-//     int i;
-//     int j;
-
-//     i = 0;
-//     while (state->map.board[i])
-//     {
-//         while (state->map.board[i][j])
-//         {
-//             if (state->map.board[i][j] == 'P')
-//             {
-//                 state->player.x = i;
-//                 state->player.y = j;
-//             }
-
-//         }
-
-//     }
-
-//}
-
 void game_map_locations(t_state *state)
 {
 	int i;
@@ -153,23 +129,6 @@ void game_map_locations(t_state *state)
 		i++;
 	}
 }
-// void map_size(t_state *state)
-// {
-//     int i;
-//     int j;
-
-//     i = 0;
-//     j = 0;
-//     state->map.height = 0;
-//     state->map.width = 0;
-//     while (state->map.board[i])
-//         i++;
-//     state->map.height = i * 32;
-//     while (state->map.board[i][j])
-//         j++;
-//     state->map.width = j * 32;
-// }
-
 void map_size(t_state *state)
 {
 	int i;
@@ -190,7 +149,7 @@ void map_size(t_state *state)
 			state->map.width = (j * 32) - 32;
 		i++;
 	}
-	state->map.height = i * 32;
+	state->map.height = i * 32; 
 }
 
 /*
