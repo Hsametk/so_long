@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:06:48 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 16:52:13 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:05:45 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,9 @@ void is_space(t_state *state)
             if (state->map.board[i][j] == ' ')
             {
                 // Boşluk çevresindeki hücrelerin kontrolü
-                if (i == 0 || j == 0 || 
-                    state->map.board[i + 1] == NULL || 
-                    state->map.board[i][j + 1] == '\0' || 
-                    state->map.board[i - 1][j] == '\0' || 
-                    state->map.board[i][j - 1] == '\0' ||
-                    state->map.board[i - 1][j] == ' ' ||
-                    state->map.board[i + 1][j] == ' ' ||
-                    state->map.board[i][j - 1] == ' ' ||
-                    state->map.board[i][j + 1] == ' ')
+                if (i == 0 || j == 0 || state->map.board[i + 1] == NULL || state->map.board[i][j + 1] == '\0' || state->map.board[i - 1][j] == '\0' || 
+                    state->map.board[i][j - 1] == '\0' || state->map.board[i - 1][j] == ' ' || state->map.board[i + 1][j] == ' ' ||
+                    state->map.board[i][j - 1] == ' ' || state->map.board[i][j + 1] == ' ')
                 {
                     errno = EINVAL;
                     perror("Map contains invalid spaces.");
@@ -107,8 +101,6 @@ void	is_missing(t_state *state)
 		a = 0;
 		while (state->map.board[i][a])
 			a++;
-        // ft_printf("%d\n",state->map.width);
-        // ft_printf("%d\n",a);
 		i++;
     }
 		if (a != state->map.width)
@@ -118,30 +110,6 @@ void	is_missing(t_state *state)
             exit(EXIT_FAILURE);
         }
 }
-// void is_any_char(t_state *state)
-// {
-//     int i;
-//     int j;
-
-//     i = 0;
-//     while (state->map.board[i])
-//     {
-//         j = 0;
-//         while (state->map.board[i][j])
-//         {
-//             if (state->map.board[i][j] != 'C' && state->map.board[i][j] != 'P' && 
-//                 state->map.board[i][j] != 'E' && state->map.board[i][j] != '0' && 
-//                 state->map.board[i][j] != '1')
-//             {
-//                 errno = EINVAL; 
-//                 perror("There is a misplaced character on the map.");
-//                 exit(EXIT_FAILURE);
-//             }
-//             j++;
-//         }
-//         i++;
-//     }   
-//}
 void is_any_char(t_state *state)
 {
     int i;

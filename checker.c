@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 16:42:15 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/14 18:19:55 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,11 @@ void map_checker(char *map, t_state *state)
 	}
 
 	t_state begin;
-	begin.player.x = state->player.x;
-	begin.player.y = state->player.y;
 
 	check_file(state);
 	read_map(map, state);
+	begin.player.x = state->player.x;
+	begin.player.y = state->player.y;
 	flood_fill(map_copy, *state, begin);
 	wall_control(state);
 	is_space(state); // -
@@ -166,6 +166,7 @@ void map_checker(char *map, t_state *state)
 	is_any_char(state);
 	cpe_counter(state);
 	map_size(state);
+	game_map_locations(state);
 	// free_map(map_copy, state->map.height);
 }
 void game_map_locations(t_state *state)
@@ -173,6 +174,7 @@ void game_map_locations(t_state *state)
 	int i;
 	int j;
 	i = 0;
+
 	while (state->map.board[i])
 	{
 		j = 0;
@@ -180,8 +182,8 @@ void game_map_locations(t_state *state)
 		{
 			if (state->map.board[i][j] == 'P')
 			{
-				state->player.x = i;
-				state->player.y = j;
+				state->player.y = i;
+				state->player.x = j;
 			}
 			if (state->map.board[i][j] == 'E')
 			{
@@ -196,6 +198,11 @@ void game_map_locations(t_state *state)
 		}
 		i++;
 	}
+    ft_printf("%d\n", state->player.x);
+    ft_printf("%d\n", state->player.y);
+    ft_printf("%d\n", state->exit.x);
+
+	ft_printf("----------------");
 }
 void map_size(t_state *state)
 {
