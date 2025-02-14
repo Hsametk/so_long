@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <errno.h>
 
 # define KEY_ESC    65307
 
@@ -81,22 +82,23 @@ typedef struct s_state
 	t_exit exit;
 } t_state;
 
-void map_checker(char *map, t_state *my_map);
-void flood_fill(char **tab, t_state size, t_state begin);
-void read_map(char *map, t_state *my_map);
-void map_error();
-void error_filename(void);
-char **copy_map(char **original, int height);
-void free_map(char **map, int height);
-void put_image(t_state *state);
-void put_screen(t_state *state);
-void game_map_locations(t_state *state);
-void map_size(t_state *state);
-int handle_key(int key);
-int dest_win(); //??
-void wall_control(t_state *state);
+void	map_checker(char *map, t_state *my_map);
+void	flood_fill(char **tab, t_state size, t_state begin);
+void	read_map(char *map, t_state *my_map);
+void	map_error();
+void	error_filename(void);
+char	**copy_map(char **original, int height);
+void	free_map(char **map, int height);
+void	put_image(t_state *state);
+void	put_screen(t_state *state);
+void	game_map_locations(t_state *state);
+void	map_size(t_state *state);
+int 	handle_key(int key);
+int 	dest_win(); //??
+void	wall_control(t_state *state);
 void	cpe_counter(t_state *state);
 void	is_missing(t_state *state);
-void is_any_char(t_state *state);
-void error_message_for_counter(char *str);
+void	is_any_char(t_state *state);
+void	error_message_for_counter(char *str);
+void	is_space(t_state *state);
 #endif

@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/13 11:00:38 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/14 16:42:15 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,57 +27,121 @@ static void check_file(t_state *map)
 	if (map->map.filename[len - 4] != '.')
 		error_filename();
 }
-void read_map(char *map, t_state *my_map)
+// void read_map(char *map, t_state *state)
+// {
+// 	char **arr;
+// 	int fd;
+// 	int line_count;
+// 	char *line;
+// 	arr = NULL;
+// 	fd = open(map, O_RDONLY, 777);
+// 	if (fd < 0)
+// 	{
+// 		perror("Error opening map file");
+// 		exit(EXIT_FAILURE);
+// 	}
+
+// 	// Dosyanın kaç satır olduğunu öğrenmek için ön okuma
+// 	line_count = 0;
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		line_count++;
+// 		state->map.height = line_count;
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	// Bellek ayır ve dosyayı yeniden aç
+// 	arr = malloc(sizeof(char *) * (line_count + 1));
+// 	if (!arr)
+// 	{
+// 		perror("Memory allocation failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+
+// 	fd = open(map, O_RDONLY, 777);
+// 	if (fd < 0)
+// 	{
+// 		perror("Error reopening map file");
+// 		free(arr);
+// 		exit(EXIT_FAILURE);
+// 	}
+
+// 	int j = 0;
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		arr[j] = ft_strdup(line);
+// 		state->map.width = ft_strlen(line);
+// 		free(line);
+// 		j++;
+// 	}
+// 	arr[j] = NULL; // Sonlandırıcı ekle
+// 	close(fd);
+
+// 	state->map.board = arr;
+// }
+void read_map(char *map, t_state *state)
 {
-	char **arr;
-	int fd;
-	int line_count;
-	char *line;
-	arr = NULL;
-	fd = open(map, O_RDONLY, 777);
-	if (fd < 0)
-	{
-		perror("Error opening map file");
-		exit(EXIT_FAILURE);
-	}
+    char **arr;
+    int fd;
+    int line_count;
+    char *line;
 
-	// Dosyanın kaç satır olduğunu öğrenmek için ön okuma
-	line_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		line_count++;
-		free(line);
-	}
-	close(fd);
-	my_map->map.height = line_count;
-	// Bellek ayır ve dosyayı yeniden aç
-	arr = malloc(sizeof(char *) * (line_count + 1));
-	if (!arr)
-	{
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
-	}
+    arr = NULL;
+    fd = open(map, O_RDONLY);
+    if (fd < 0)
+    {
+        perror("Error opening map file");
+        exit(EXIT_FAILURE);
+    }
 
-	fd = open(map, O_RDONLY, 777);
-	if (fd < 0)
-	{
-		perror("Error reopening map file");
-		free(arr);
-		exit(EXIT_FAILURE);
-	}
+    // Dosyanın kaç satır olduğunu öğrenmek için ön okuma
+    line_count = 0;
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        line_count++;
+        free(line);  // Her satırı okuduktan sonra serbest bırak
+    }
+    state->map.height = line_count;  // Yüksekliği dışarıda ayarlıyoruz
+    close(fd);
 
-	int j = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		arr[j] = ft_strdup(line);
-		free(line);
-		j++;
-	}
-	my_map->map.width = ft_strlen(line);
-	arr[j] = NULL; // Sonlandırıcı ekle
-	close(fd);
+    // Bellek ayır ve dosyayı yeniden aç
+    arr = malloc(sizeof(char *) * (line_count + 1));
+    if (!arr)
+    {
+        perror("Memory allocation failed");
+        exit(EXIT_FAILURE);
+    }
 
-	my_map->map.board = arr;
+    fd = open(map, O_RDONLY);
+    if (fd < 0)
+    {
+        perror("Error reopening map file");
+        free(arr);
+        exit(EXIT_FAILURE);
+    }
+
+    int j = 0;
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        arr[j] = ft_strdup(line);
+        if (arr[j] == NULL)
+        {
+            perror("Memory allocation failed for line copy");
+            exit(EXIT_FAILURE);
+        }
+        free(line); // `line`'ı kopyaladıktan sonra serbest bırak
+        j++;
+    }
+    arr[j] = NULL; // Sonlandırıcı ekle
+    close(fd);
+
+    state->map.board = arr;
+
+    // Eğer her satırın genişliği farklı olacaksa, her satırın genişliğini kaydedebilirsiniz
+    if (line_count > 0)
+    {
+        state->map.width = ft_strlen(arr[0]) - 1;  // İlk satırın genişliği genel genişlik olarak kabul edilebilir
+    }
 }
 
 void map_checker(char *map, t_state *state)
@@ -96,7 +160,11 @@ void map_checker(char *map, t_state *state)
 	check_file(state);
 	read_map(map, state);
 	flood_fill(map_copy, *state, begin);
-	// is_map_valid(state); //to-do
+	wall_control(state);
+	is_space(state); // -
+	is_missing(state);
+	is_any_char(state);
+	cpe_counter(state);
 	map_size(state);
 	// free_map(map_copy, state->map.height);
 }
@@ -138,8 +206,6 @@ void map_size(t_state *state)
 		return;
 
 	i = 0;
-	state->map.height = 0;
-	state->map.width = 0;
 	while (state->map.board[i])
 	{
 		j = 0;

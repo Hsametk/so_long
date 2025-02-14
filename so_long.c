@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/13 11:06:17 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/14 13:42:16 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,6 @@ int main(int argc, char *argv[])
         perror("Failed to create MLX window");
         return EXIT_FAILURE;
     }
-    ft_printf("%d\n",state.map.height);
-    ft_printf("%d\n",state.map.width);
-    ft_printf("%d\n",state.map.map_size_height);
-    ft_printf("%d\n",state.map.map_size_width);
     put_image(&state);
     put_screen(&state);
     mlx_key_hook(state.win, &handle_key, state.mlx);
