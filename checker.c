@@ -198,11 +198,6 @@ void game_map_locations(t_state *state)
 		}
 		i++;
 	}
-    ft_printf("%d\n", state->player.x);
-    ft_printf("%d\n", state->player.y);
-    ft_printf("%d\n", state->exit.x);
-
-	ft_printf("----------------");
 }
 void map_size(t_state *state)
 {
