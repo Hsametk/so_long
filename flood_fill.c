@@ -1,41 +1,35 @@
 #include "so_long.h"
 
-void fill(char **tab, t_state size, char target, int row, int col)
+void fill(char **tab, int height, int width, int row, int col)
 {
     // Out-of-bounds kontrolü
-    if (!tab || row < 0 || col < 0 || row >= size.player.y || col >= size.player.x || !tab[row])
+    if (!tab || row < 0 || col < 0 || row >= height || col >= width || !tab[row])
         return;
 
-    // Zaten dolu veya hedef karakter değilse durdur
-    if (tab[row][col] == 'F' || tab[row][col] != target)
+    // Duvar veya ziyaret edilmiş hücre kontrolü
+    if (tab[row][col] == '1' || tab[row][col] == 'F')
         return;
 
-    // Mevcut hücreyi doldur
+    // Mevcut hücreyi işaretle
     tab[row][col] = 'F';
 
-    // Komşu hücreleri doldur
-    fill(tab, size, target, row - 1, col); // Üst hücre
-    fill(tab, size, target, row + 1, col); // Alt hücre
-    fill(tab, size, target, row, col - 1); // Sol hücre
-    fill(tab, size, target, row, col + 1); // Sağ hücre
+    // Tüm yönleri kontrol et
+    fill(tab, height, width, row - 1, col);  // yukarı
+    fill(tab, height, width, row + 1, col);  // aşağı
+    fill(tab, height, width, row, col - 1);  // sol
+    fill(tab, height, width, row, col + 1);  // sağ
 }
 
-void flood_fill(char **tab, t_state size, t_state begin)
+void flood_fill(char **tab, t_state *state, t_state begin)
 {
-    // Başlangıç koordinatları sınır dışıysa durdur
-    if (!tab || begin.player.y < 0 || begin.player.x < 0 ||
-        begin.player.y >= size.player.y || begin.player.x >= size.player.x || !tab[begin.player.y])
+    if (!tab || !state || begin.player.y < 0 || begin.player.x < 0 ||
+        begin.player.y >= state->map.height || begin.player.x >= state->map.width)
+    {
+        ft_printf("Error: Invalid flood fill parameters\n");
         return;
-
-    char target = tab[begin.player.y][begin.player.x];
-
-    // Eğer hedef karakter dolu hücreyi temsil ediyorsa işlem yapma
-    if (target == 'F')
-        return;
-
-    // Flood fill başlat
-    fill(tab, size, target, begin.player.y, begin.player.x);
-    // ft_printf("Floood başarili.");
+    }
+    
+    fill(tab, state->map.height, state->map.width, begin.player.y, begin.player.x);
 }
 
 char **copy_map(char **original, int height)

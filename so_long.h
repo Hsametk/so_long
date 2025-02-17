@@ -83,7 +83,8 @@ typedef struct s_state
 } t_state;
 
 void	map_checker(char *map, t_state *my_map);
-void	flood_fill(char **tab, t_state size, t_state begin);
+//void	flood_fill(char **tab, t_state size, t_state begin);
+void flood_fill(char **tab, t_state *state, t_state begin);
 void	read_map(char *map, t_state *my_map);
 void	map_error();
 void	error_filename(void);

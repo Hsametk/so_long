@@ -140,34 +140,65 @@ void read_map(char *map, t_state *state)
     // Eğer her satırın genişliği farklı olacaksa, her satırın genişliğini kaydedebilirsiniz
     if (line_count > 0)
     {
-        state->map.width = ft_strlen(arr[0]) - 1;  // İlk satırın genişliği genel genişlik olarak kabul edilebilir
+        state->map.width = ft_strlen(arr[0]);
+        if (arr[0][state->map.width - 1] == '\n')
+            state->map.width--;
     }
 }
 
 void map_checker(char *map, t_state *state)
 {
-	char **map_copy = copy_map(state->map.board, state->map.height);
-	if (!map_copy)
-	{
-		ft_printf("Error: Map copy failed.\n");
-		exit(EXIT_FAILURE);
-	}
+    t_state begin;
 
-	t_state begin;
+    // Önce dosya kontrolü ve harita okuma işlemlerini yap
+    check_file(state);
+    read_map(map, state);
+    
+    // Harita okunduktan sonra kopyala
+    char **map_copy = copy_map(state->map.board, state->map.height);
+    if (!map_copy)
+    {
+        ft_printf("Error: Map copy failed.\n");
+        exit(EXIT_FAILURE);
+    }
 
-	check_file(state);
-	read_map(map, state);
-	begin.player.x = state->player.x;
-	begin.player.y = state->player.y;
-	flood_fill(map_copy, *state, begin);
-	wall_control(state);
-	is_space(state); // -
-	is_missing(state);
-	is_any_char(state);
-	cpe_counter(state);
-	map_size(state);
-	game_map_locations(state);
-	// free_map(map_copy, state->map.height);
+    // Oyuncu konumunu belirle
+    game_map_locations(state);
+    begin.player.x = state->player.x;
+    begin.player.y = state->player.y;
+    
+    flood_fill(map_copy, state, begin);
+
+    // Erişilebilirlik kontrolü
+    int valid_path = 1;
+    for (int i = 0; i < state->map.height; i++)
+    {
+        for (int j = 0; j < state->map.width; j++)
+        {
+            if (state->map.board[i][j] == 'C' || state->map.board[i][j] == 'E')
+            {
+                if (map_copy[i][j] != 'F')
+                {
+                    valid_path = 0;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!valid_path)
+    {
+        ft_printf("Error: Invalid map path\n");
+        exit(EXIT_FAILURE);
+    }
+
+    wall_control(state);
+    is_space(state);
+    is_missing(state);
+    is_any_char(state);
+    cpe_counter(state);
+    map_size(state);
+    free_map(map_copy, state->map.height);
 }
 void game_map_locations(t_state *state)
 {
