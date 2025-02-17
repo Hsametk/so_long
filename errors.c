@@ -1,13 +1,12 @@
-
 #include "so_long.h"
 
-void error_filename(void)
+void    error_filename(void)
 {
     ft_printf("Filename should be a BER extension file");
     exit(EXIT_FAILURE);
 }
 
-void error_message_for_counter(char *str)
+void    error_message_for_counter(char *str)
 {
     while (*str != '\0')
     {

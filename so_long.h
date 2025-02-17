@@ -1,4 +1,3 @@
-
 #ifndef SO_LONG
 #define SO_LONG
 
@@ -71,6 +70,13 @@ typedef struct s_imgs
 
 } t_imgs;
 
+typedef struct s_screen
+{
+	int screen_width;
+	int screen_height;
+} t_screen;
+
+
 typedef struct s_state
 {
 	void *mlx;
@@ -80,6 +86,7 @@ typedef struct s_state
 	t_imgs imgs;
 	int collectibles;
 	t_exit exit;
+	t_screen screen;
 } t_state;
 
 void	map_checker(char *map, t_state *my_map);
@@ -105,4 +112,7 @@ int		handle_key(int key, t_state *state);
 void    move_player(int key, t_state *state);
 int		dest_win();
 void 	game_map_locations(t_state *state);
+int check_next_position(t_state *state, int next_y, int next_x);
+int check_valid_path(char **map_copy, t_state *state);
+void check_screen_size(t_state *state);
 #endif

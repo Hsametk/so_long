@@ -28,6 +28,8 @@ int main(int argc, char *argv[])
         perror("Failed to initialize MLX");
         return EXIT_FAILURE;
     }
+    mlx_get_screen_size(state.mlx, &state.screen.screen_width, &state.screen.screen_height);
+    check_screen_size(&state);
     state.win = mlx_new_window(state.mlx, state.map.map_size_width, state.map.map_size_height, "./so_long");
     if (!state.win)
     {
@@ -42,39 +44,11 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
 /*
 to-dos
 
-Map kontrolünü yap.
-kontroller
------------
-1- map valid mi yani çevresi 1 lerden oluşuyor mu. //to-do
-2- 1 karakter ve 1 çıkış olmalı. en az 1 tane toplanabilir nesne olmalı.
-4- oyuncu çıkışa gidebiliyor mu önünde bir engel var mı?
-5- map in bilgileri linkled list e atanmalı. Collactable sayısı, exit sayısı, player sayısı.
-Map'in boyutu.
-6-
+** memory leakleri check et
 
-
-** todo player ın ve ezit in x y sini structa ata
-
-** Hookları entegre et mouse ve klayve entegresi.
-
-** Duvarlardan geçemeyecek.
-
-** Collactable ın üzerinde gelince sayısını azalt ve resmi floor ile değiştir.
-
-** Çıkışa geldiğinde collactable değişkeninin 0 olması durumunda çık ve window u kapat.
-
-** Haraket sayısını shell e yazdır.
-
-** memory leakleri check et˙
-
-** flood fill de null varsa F koyma neye F koyacağını belirt.
-
-** Ekran boyutundan büyük window açma (bunun için mlx in içerisende fonksiyon varmış bak)
-
-** collactable ın üzerine gelince haritanın değerini değiştir fonksiyonu tekrar çağır ve bas.
+** Norm kurallarına bak.
 
 */

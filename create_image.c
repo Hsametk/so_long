@@ -14,9 +14,9 @@
 
 void put_image(t_state *state)
 {
-    int img_w;
-    int img_h;
-    char *str;
+    int     img_w;
+    int     img_h;
+    char    *str;
 
     str = "srcs/assets/wall.xpm";
     state->imgs.w = mlx_xpm_file_to_image(state->mlx, str, &img_w, &img_h);
@@ -33,8 +33,8 @@ void put_image(t_state *state)
 }
 void put_screen(t_state *state)
 {
-    int y;
-    int x;
+    int     y;
+    int     x;
 
     y = 0;
     while (state->map.board[y])

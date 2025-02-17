@@ -38,31 +38,7 @@ void    wall_control(t_state *state)
         i++;
     }    
 }
-// void	is_space(t_state *state)
-// {
-// 	int	i;
-//     int j;
-    
-// 	i = 0;
-// 	while (state->map.board[i])
-// 	{
-//         j = 0;
-//         while (state->map.board[i][j])
-//         {
-//             if (state->map.board[i][j] == '\n')
-//             {
-//                if (i != 0 && (state->map.board[i][j - 1] != '1' || state->map.board[i][j + 1] != '1'))
-//                {
-//                     errno = EINVAL; 
-//                     perror("Map is have a problem.");
-//                     exit(EXIT_FAILURE);
-//                }
-//             }
-//             j++;
-//         }
-//         i++;
-// 	}
-// }
+
 void is_space(t_state *state)
 {
     int i, j;

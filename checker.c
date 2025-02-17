@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 #include "fcntl.h"
-// to-do
+
 static void check_file(t_state *map)
 {
 	size_t len;
@@ -27,179 +27,101 @@ static void check_file(t_state *map)
 	if (map->map.filename[len - 4] != '.')
 		error_filename();
 }
-// void read_map(char *map, t_state *state)
-// {
-// 	char **arr;
-// 	int fd;
-// 	int line_count;
-// 	char *line;
-// 	arr = NULL;
-// 	fd = open(map, O_RDONLY, 777);
-// 	if (fd < 0)
-// 	{
-// 		perror("Error opening map file");
-// 		exit(EXIT_FAILURE);
-// 	}
 
-// 	// Dosyanın kaç satır olduğunu öğrenmek için ön okuma
-// 	line_count = 0;
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		line_count++;
-// 		state->map.height = line_count;
-// 		free(line);
-// 	}
-// 	close(fd);
-// 	// Bellek ayır ve dosyayı yeniden aç
-// 	arr = malloc(sizeof(char *) * (line_count + 1));
-// 	if (!arr)
-// 	{
-// 		perror("Memory allocation failed");
-// 		exit(EXIT_FAILURE);
-// 	}
-
-// 	fd = open(map, O_RDONLY, 777);
-// 	if (fd < 0)
-// 	{
-// 		perror("Error reopening map file");
-// 		free(arr);
-// 		exit(EXIT_FAILURE);
-// 	}
-
-// 	int j = 0;
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		arr[j] = ft_strdup(line);
-// 		state->map.width = ft_strlen(line);
-// 		free(line);
-// 		j++;
-// 	}
-// 	arr[j] = NULL; // Sonlandırıcı ekle
-// 	close(fd);
-
-// 	state->map.board = arr;
-// }
 void read_map(char *map, t_state *state)
 {
-    char **arr;
-    int fd;
-    int line_count;
-    char *line;
+	char **arr;
+	int fd;
+	int line_count;
+	char *line;
 
-    arr = NULL;
-    fd = open(map, O_RDONLY);
-    if (fd < 0)
-    {
-        perror("Error opening map file");
-        exit(EXIT_FAILURE);
-    }
+	state->player.moves = 0;
+	arr = NULL;
+	fd = open(map, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error opening map file");
+		exit(EXIT_FAILURE);
+	}
 
-    // Dosyanın kaç satır olduğunu öğrenmek için ön okuma
-    line_count = 0;
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        line_count++;
-        free(line);  // Her satırı okuduktan sonra serbest bırak
-    }
-    state->map.height = line_count;  // Yüksekliği dışarıda ayarlıyoruz
-    close(fd);
+	line_count = 0;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		line_count++;
+		free(line);
+	}
+	state->map.height = line_count;
+	close(fd);
 
-    // Bellek ayır ve dosyayı yeniden aç
-    arr = malloc(sizeof(char *) * (line_count + 1));
-    if (!arr)
-    {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
+	arr = malloc(sizeof(char *) * (line_count + 1));
+	if (!arr)
+	{
+		perror("Memory allocation failed");
+		exit(EXIT_FAILURE);
+	}
 
-    fd = open(map, O_RDONLY);
-    if (fd < 0)
-    {
-        perror("Error reopening map file");
-        free(arr);
-        exit(EXIT_FAILURE);
-    }
+	fd = open(map, O_RDONLY);
+	if (fd < 0)
+	{
+		perror("Error reopening map file");
+		free(arr);
+		exit(EXIT_FAILURE);
+	}
 
-    int j = 0;
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        arr[j] = ft_strdup(line);
-        if (arr[j] == NULL)
-        {
-            perror("Memory allocation failed for line copy");
-            exit(EXIT_FAILURE);
-        }
-        free(line); // `line`'ı kopyaladıktan sonra serbest bırak
-        j++;
-    }
-    arr[j] = NULL; // Sonlandırıcı ekle
-    close(fd);
+	int j = 0;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		arr[j] = ft_strdup(line);
+		if (arr[j] == NULL)
+		{
+			perror("Memory allocation failed for line copy");
+			exit(EXIT_FAILURE);
+		}
+		free(line);
+		j++;
+	}
+	arr[j] = NULL;
+	close(fd);
 
-    state->map.board = arr;
+	state->map.board = arr;
 
-    // Eğer her satırın genişliği farklı olacaksa, her satırın genişliğini kaydedebilirsiniz
-    if (line_count > 0)
-    {
-        state->map.width = ft_strlen(arr[0]);
-        if (arr[0][state->map.width - 1] == '\n')
-            state->map.width--;
-    }
+	if (line_count > 0)
+	{
+		state->map.width = ft_strlen(arr[0]);
+		if (arr[0][state->map.width - 1] == '\n')
+			state->map.width--;
+	}
 }
 
 void map_checker(char *map, t_state *state)
 {
-    t_state begin;
+	t_state begin;
 
-    // Önce dosya kontrolü ve harita okuma işlemlerini yap
-    check_file(state);
-    read_map(map, state);
-    
-    // Harita okunduktan sonra kopyala
-    char **map_copy = copy_map(state->map.board, state->map.height);
-    if (!map_copy)
-    {
-        ft_printf("Error: Map copy failed.\n");
-        exit(EXIT_FAILURE);
-    }
+	check_file(state);
+	read_map(map, state);
+	
+	char **map_copy = copy_map(state->map.board, state->map.height);
+	if (!map_copy)
+	{
+		ft_printf("Error: Map copy failed.\n");
+		exit(EXIT_FAILURE);
+	}
 
-    // Oyuncu konumunu belirle
-    game_map_locations(state);
-    begin.player.x = state->player.x;
-    begin.player.y = state->player.y;
-    
-    flood_fill(map_copy, state, begin);
+	game_map_locations(state);
+	begin.player.x = state->player.x;
+	begin.player.y = state->player.y;
+	
+	flood_fill(map_copy, state, begin);
 
-    // Erişilebilirlik kontrolü
-    int valid_path = 1;
-    for (int i = 0; i < state->map.height; i++)
-    {
-        for (int j = 0; j < state->map.width; j++)
-        {
-            if (state->map.board[i][j] == 'C' || state->map.board[i][j] == 'E')
-            {
-                if (map_copy[i][j] != 'F')
-                {
-                    valid_path = 0;
-                    break;
-                }
-            }
-        }
-    }
-
-    if (!valid_path)
-    {
-        ft_printf("Error: Invalid map path\n");
-        exit(EXIT_FAILURE);
-    }
-
-    wall_control(state);
-    is_space(state);
-    is_missing(state);
-    is_any_char(state);
-    cpe_counter(state);
-    map_size(state);
-    free_map(map_copy, state->map.height);
+	wall_control(state);
+	is_space(state);
+	is_missing(state);
+	is_any_char(state);
+	cpe_counter(state);
+	map_size(state);
+	free_map(map_copy, state->map.height);
 }
+
 void game_map_locations(t_state *state)
 {
 	int i;
@@ -230,6 +152,7 @@ void game_map_locations(t_state *state)
 		i++;
 	}
 }
+
 void map_size(t_state *state)
 {
 	int i;
@@ -250,7 +173,15 @@ void map_size(t_state *state)
 	}
 	state->map.map_size_height = i * 32; 
 }
-
+void check_screen_size(t_state *state)
+{
+	if (state->map.map_size_width > state->screen.screen_width || 
+		state->map.map_size_height > state->screen.screen_height)
+	{
+		ft_printf("Error: Map is too big for screen resolution\n");
+		exit(EXIT_FAILURE);
+	}
+}
 /*
 	is_map_valid
 

@@ -20,6 +20,22 @@ void fill(char **tab, int height, int width, int row, int col)
     fill(tab, height, width, row, col + 1);  // sağ
 }
 
+int check_valid_path(char **map_copy, t_state *state)
+{
+    for (int i = 0; i < state->map.height; i++)
+    {
+        for (int j = 0; j < state->map.width; j++)
+        {
+            if (state->map.board[i][j] == 'C' || state->map.board[i][j] == 'E')
+            {
+                if (map_copy[i][j] != 'F')
+                    return (0);
+            }
+        }
+    }
+    return (1);
+}
+
 void flood_fill(char **tab, t_state *state, t_state begin)
 {
     if (!tab || !state || begin.player.y < 0 || begin.player.x < 0 ||
@@ -30,6 +46,13 @@ void flood_fill(char **tab, t_state *state, t_state begin)
     }
     
     fill(tab, state->map.height, state->map.width, begin.player.y, begin.player.x);
+
+    // Geçerli yol kontrolü
+    if (!check_valid_path(tab, state))
+    {
+        ft_printf("Error: Invalid map path\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
 char **copy_map(char **original, int height)
