@@ -29,14 +29,14 @@ int check_next_position(t_state *state, int next_y, int next_x)
     }
     else if (next_pos == 'E')
     {
-        // Collectibles 0 ise oyunu bitir
         if (state->collectibles == 0)
         {
+            state->player.moves++;  // Son hareketi de sayıyoruz
+            ft_printf("Moves: %d\n", state->player.moves);  // Son hareket sayısını yazdır
             ft_printf("Game completed! All collectibles collected.\n");
             dest_win();
         }
-        // Exit'e gelindi ama collectible kaldıysa hareket etme
-        return (0);
+        return (0);  // Exit'e gelince hareket etme
     }
     return (1);
 }

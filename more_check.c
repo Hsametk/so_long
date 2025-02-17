@@ -66,25 +66,31 @@ void is_space(t_state *state)
         i++;
     }
 }
-void	is_missing(t_state *state)
+void    is_missing(t_state *state)
 {
-	int	i;
-	int	a;
+    int     i;
+    int     len;
+    int     first_len;
 
-	i = 0;
-	while (state->map.board[i])
-	{
-		a = 0;
-		while (state->map.board[i][a])
-			a++;
-		i++;
-    }
-		if (a != state->map.width)
+    i = 0;
+    if (!state->map.board[0])
+        return ;
+    first_len = ft_strlen(state->map.board[0]);
+    while (state->map.board[i])
+    {
+        len = ft_strlen(state->map.board[i]);
+        if (len != first_len)
         {
-            errno = EINVAL; 
-			perror("There is a problem with the map");
+            ft_printf("Error: Map must be rectangular\n");
             exit(EXIT_FAILURE);
         }
+        i++;
+    }
+    if (first_len != state->map.width)
+    {
+        ft_printf("Error: Invalid map width\n");
+        exit(EXIT_FAILURE);
+    }
 }
 void is_any_char(t_state *state)
 {
