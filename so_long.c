@@ -39,9 +39,8 @@ int main(int argc, char *argv[])
     put_image(&state);
     put_screen(&state);
     mlx_key_hook(state.win, &handle_key, &state);
-    mlx_hook(state.win, 17, 0, &dest_win, NULL);
+    mlx_hook(state.win, 17, 0, &dest_win, &state);
     mlx_loop(state.mlx);
-
     return 0;
 }
 /*

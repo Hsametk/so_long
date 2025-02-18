@@ -12,8 +12,26 @@
 
 #include "so_long.h"
 
-int dest_win()
+int dest_win(t_state *state)
 {
+    int i;
+    i = 0;
+    mlx_destroy_image(state->mlx, state->imgs.c);
+    mlx_destroy_image(state->mlx, state->imgs.e);
+    mlx_destroy_image(state->mlx, state->imgs.f);
+    mlx_destroy_image(state->mlx, state->imgs.p);
+    mlx_destroy_image(state->mlx, state->imgs.w);
+
+    mlx_destroy_window(state->mlx, state->win);
+    if (state->mlx)
+         mlx_destroy_display(state->mlx);
+    free(state->mlx);
+    while (state->map.board[i])
+    {
+        free(state->map.board[i]);
+        i++;
+    }
+    free(state->map.board);
     exit(0);
     return (0);
 }
@@ -34,7 +52,7 @@ int check_next_position(t_state *state, int next_y, int next_x)
             state->player.moves++;  // Son hareketi de sayıyoruz
             ft_printf("Moves: %d\n", state->player.moves);  // Son hareket sayısını yazdır
             ft_printf("Game completed! All collectibles collected.\n");
-            dest_win();
+            dest_win(state);
         }
         return (0);  // Exit'e gelince hareket etme
     }
@@ -117,7 +135,7 @@ int handle_key(int key, t_state *state)
         return (0);
 
     if (key == KEY_ESC)
-        dest_win();
+        dest_win(state);
     else if (key == KEY_A || key == KEY_D || key == KEY_S || key == KEY_W)
         move_player(key, state);
     return (0);

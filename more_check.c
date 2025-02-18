@@ -21,6 +21,7 @@ void    wall_control(t_state *state)
     {
         if (state->map.board[0][i] != '1' || state->map.board[state->map.height -1][i] != '1')
         {
+            errno = EINVAL;
             perror("Incorrect map element.");
             exit(EXIT_FAILURE);
         }
@@ -66,32 +67,78 @@ void is_space(t_state *state)
         i++;
     }
 }
-void    is_missing(t_state *state)
+// void    is_missing(t_state *state)
+// {
+//     int     i;
+//     int     len;
+//     int     first_len;
+
+//     i = 0;
+//     if (!state->map.board[0])
+//         return ;
+//     first_len = ft_strlen(state->map.board[0]);
+//     while (state->map.board[i])
+//     {
+//         len = ft_strlen(state->map.board[i]);
+//         if (len != first_len && state->map.height != i + 1)
+//         {
+//             ft_printf("1Error: Map must be rectangular\n");
+//             exit(EXIT_FAILURE);
+//         }
+//         i++;
+//     }
+//     len = ft_strlen(state->map.board[state->map.height + 1]);
+//     //first_len -= 1;
+//     if (len != first_len)
+//     {
+//         ft_printf("2Error: Map must be rectangular\n");
+//         exit(EXIT_FAILURE);
+//     }
+    
+//     // if (first_len != state->map.width)
+//     // {
+//     //     ft_printf("Error: Invalid map width\n");
+//     //     exit(EXIT_FAILURE);
+//     // }
+// }
+void is_missing(t_state *state)
 {
-    int     i;
-    int     len;
-    int     first_len;
+    int i;
+    int len;
+    int first_len;
 
     i = 0;
     if (!state->map.board[0])
         return ;
+
+    // İlk satırın uzunluğunu al
     first_len = ft_strlen(state->map.board[0]);
+
+    // Tüm satırları kontrol et
     while (state->map.board[i])
     {
         len = ft_strlen(state->map.board[i]);
-        if (len != first_len)
+        
+        // Eğer satır uzunluğu ilk satırdan farklıysa, hata ver
+        if (len != first_len && state->map.height != i + 1)
         {
-            ft_printf("Error: Map must be rectangular\n");
+            ft_printf("1Error: Map must be rectangular\n");
             exit(EXIT_FAILURE);
         }
         i++;
     }
-    if (first_len != state->map.width)
+
+    // Son satırın uzunluğunu al ve ekstra \0'ı dikkate al
+    len = ft_strlen(state->map.board[state->map.height -1]); // index 0 dan başladığı için - 1
+    // Eğer son satırın uzunluğu diğer satırlardan farklıysa, hata ver
+    if (len+1 != first_len) // \n olmadığğı için
     {
-        ft_printf("Error: Invalid map width\n");
+        ft_printf("2Error: Map must be rectangular\n");
         exit(EXIT_FAILURE);
     }
 }
+
+
 void is_any_char(t_state *state)
 {
     int i;
