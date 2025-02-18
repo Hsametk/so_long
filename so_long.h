@@ -112,7 +112,8 @@ int		handle_key(int key, t_state *state);
 void    move_player(int key, t_state *state);
 int		dest_win();
 void 	game_map_locations(t_state *state);
-int check_next_position(t_state *state, int next_y, int next_x);
-int check_valid_path(char **map_copy, t_state *state);
-void check_screen_size(t_state *state);
+int 	check_next_position(t_state *state, int next_y, int next_x);
+int		check_valid_path(char **map_copy, t_state *state);
+void	check_screen_size(t_state *state);
+void	free_map_err(t_state *state);
 #endif

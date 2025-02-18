@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:06:48 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 18:05:45 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:45:19 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    wall_control(t_state *state)
         {
             errno = EINVAL;
             perror("Incorrect map element.");
-            exit(EXIT_FAILURE);
+            return(free_map_err(state), exit(EXIT_FAILURE));
         }
         i++;
     }
@@ -34,7 +34,7 @@ void    wall_control(t_state *state)
         {
             errno = EINVAL; 
             perror("Incorrect map element.");
-            exit(EXIT_FAILURE);
+            return(free_map_err(state), exit(EXIT_FAILURE));
         }
         i++;
     }    
@@ -67,40 +67,6 @@ void is_space(t_state *state)
         i++;
     }
 }
-// void    is_missing(t_state *state)
-// {
-//     int     i;
-//     int     len;
-//     int     first_len;
-
-//     i = 0;
-//     if (!state->map.board[0])
-//         return ;
-//     first_len = ft_strlen(state->map.board[0]);
-//     while (state->map.board[i])
-//     {
-//         len = ft_strlen(state->map.board[i]);
-//         if (len != first_len && state->map.height != i + 1)
-//         {
-//             ft_printf("1Error: Map must be rectangular\n");
-//             exit(EXIT_FAILURE);
-//         }
-//         i++;
-//     }
-//     len = ft_strlen(state->map.board[state->map.height + 1]);
-//     //first_len -= 1;
-//     if (len != first_len)
-//     {
-//         ft_printf("2Error: Map must be rectangular\n");
-//         exit(EXIT_FAILURE);
-//     }
-    
-//     // if (first_len != state->map.width)
-//     // {
-//     //     ft_printf("Error: Invalid map width\n");
-//     //     exit(EXIT_FAILURE);
-//     // }
-// }
 void is_missing(t_state *state)
 {
     int i;

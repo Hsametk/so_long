@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 18:19:55 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/18 18:46:47 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,34 +93,6 @@ void read_map(char *map, t_state *state)
 	}
 }
 
-void map_checker(char *map, t_state *state)
-{
-	t_state begin;
-
-	check_file(state);
-	read_map(map, state);
-	
-	char **map_copy = copy_map(state->map.board, state->map.height);
-	if (!map_copy)
-	{
-		ft_printf("Error: Map copy failed.\n");
-		exit(EXIT_FAILURE);
-	}
-
-	game_map_locations(state);
-	begin.player.x = state->player.x;
-	begin.player.y = state->player.y;
-	
-	flood_fill(map_copy, state, begin);
-
-	wall_control(state);
-	is_space(state);
-	is_missing(state);
-	is_any_char(state);
-	cpe_counter(state);
-	map_size(state);
-	free_map(map_copy, state->map.height);
-}
 
 void game_map_locations(t_state *state)
 {
@@ -181,6 +153,34 @@ void check_screen_size(t_state *state)
 		ft_printf("Error: Map is too big for screen resolution\n");
 		exit(EXIT_FAILURE);
 	}
+}
+void map_checker(char *map, t_state *state)
+{
+	t_state begin;
+
+	check_file(state);
+	read_map(map, state);
+	
+	char **map_copy = copy_map(state->map.board, state->map.height);
+	if (!map_copy)
+	{
+		ft_printf("Error: Map copy failed.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	game_map_locations(state);
+	begin.player.x = state->player.x;
+	begin.player.y = state->player.y;
+	
+	flood_fill(map_copy, state, begin);
+
+	wall_control(state);
+	is_space(state);
+	is_missing(state);
+	is_any_char(state);
+	cpe_counter(state);
+	map_size(state);
+	free_map(map_copy, state->map.height);
 }
 /*
 	is_map_valid
