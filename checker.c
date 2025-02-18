@@ -182,13 +182,3 @@ void map_checker(char *map, t_state *state)
 	map_size(state);
 	free_map(map_copy, state->map.height);
 }
-/*
-	is_map_valid
-
-	en üst ve en alt satır 1 lerden oluşmalı
-	1 tane karakter ve 1 exit olmalı bunların sayısını tut
-	collactable ın sayısını tutmalısın.
-	En üst ve en alt haricinde ilk ve son eleman 1 olmalı.
-	Tüm satırların uzunluğu aynı olmalı. Ne az ne çok.
-
-*/
