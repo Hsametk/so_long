@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 12:52:12 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 13:42:16 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:40:36 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ int main(int argc, char *argv[])
 }
 /*
 to-dos
+
+** Empty ber errors.
+
+** kare map in çalışmamsı lzm.
 
 ** memory leakleri check et
 

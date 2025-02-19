@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:06:48 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 12:46:59 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 16:15:23 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,44 @@ void is_space(t_state *state)
         i++;
     }
 }
+// void is_missing(t_state *state)
+// {
+//     int i;
+//     int len;
+//     int first_len;
+
+//     i = 0;
+//     if (!state->map.board[0])
+//         return ;
+
+//     // İlk satırın uzunluğunu al
+//     first_len = ft_strlen(state->map.board[0]);
+
+//     // Tüm satırları kontrol et
+//     while (state->map.board[i])
+//     {
+//         len = ft_strlen(state->map.board[i]);
+        
+//         // Eğer satır uzunluğu ilk satırdan farklıysa, hata ver
+//         if (len != first_len && state->map.height != i + 1)
+//         {
+//             free_map_err(state);
+//             ft_printf("Error: Map must be rectangular\n");
+//             exit(EXIT_FAILURE);
+//         }
+//         i++;
+//     }
+
+//     // Son satırın uzunluğunu al ve ekstra \0'ı dikkate al
+//     len = ft_strlen(state->map.board[state->map.height -1]); // index 0 dan başladığı için - 1
+//     // Eğer son satırın uzunluğu diğer satırlardan farklıysa, hata ver
+//     if (len+1 != first_len) // \n olmadığğı için
+//     {
+//         free_map_err(state);   
+//         ft_printf("Error: Map must be rectangular\n");
+//         exit(EXIT_FAILURE);
+//     }
+// }
 void is_missing(t_state *state)
 {
     int i;
@@ -76,7 +114,7 @@ void is_missing(t_state *state)
 
     i = 0;
     if (!state->map.board[0])
-        return ;
+        return;
 
     // İlk satırın uzunluğunu al
     first_len = ft_strlen(state->map.board[0]);
@@ -85,7 +123,7 @@ void is_missing(t_state *state)
     while (state->map.board[i])
     {
         len = ft_strlen(state->map.board[i]);
-        
+
         // Eğer satır uzunluğu ilk satırdan farklıysa, hata ver
         if (len != first_len && state->map.height != i + 1)
         {
@@ -97,16 +135,23 @@ void is_missing(t_state *state)
     }
 
     // Son satırın uzunluğunu al ve ekstra \0'ı dikkate al
-    len = ft_strlen(state->map.board[state->map.height -1]); // index 0 dan başladığı için - 1
+    len = ft_strlen(state->map.board[state->map.height - 1]); // index 0'dan başladığı için -1
     // Eğer son satırın uzunluğu diğer satırlardan farklıysa, hata ver
-    if (len+1 != first_len) // \n olmadığğı için
+    if (len + 1 != first_len) // \n olmadığından
     {
-        free_map_err(state);   
+        free_map_err(state);
         ft_printf("Error: Map must be rectangular\n");
         exit(EXIT_FAILURE);
     }
-}
 
+    // Eğer harita kare ise hata ver
+    if (state->map.height == first_len)
+    {
+        free_map_err(state);
+        ft_printf("Error: Map must not be square\n");
+        exit(EXIT_FAILURE);
+    }
+}
 
 void is_any_char(t_state *state)
 {

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/19 16:16:22 by hakotu            #+#    #+#             */
+/*   Updated: 2025/02/19 16:17:36 by hakotu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void fill(char **tab, int height, int width, int row, int col)
 {
     // Out-of-bounds kontrolü
-    if (!tab || row < 0 || col < 0 || row >= height || col >= width || !tab[row])
+    if (!tab || row < 0 || col < 0 || row >= height || !tab[row] || col >= (int)ft_strlen(tab[row]))
         return;
 
     // Duvar veya ziyaret edilmiş hücre kontrolü
@@ -20,34 +32,17 @@ void fill(char **tab, int height, int width, int row, int col)
     fill(tab, height, width, row, col + 1);  // sağ
 }
 
-// int check_valid_path(char **map_copy, t_state *state)
-// {
-//     for (int i = 0; i < state->map.height; i++)
-//     {
-//         for (int j = 0; j < state->map.width; j++)
-//         {
-//             if (state->map.board[i][j] == 'C' || state->map.board[i][j] == 'E')
-//             {
-//                 if (map_copy[i][j] != 'F')
-//                     return (0);
-//             }
-//         }
-//     }
-//     return (1);
-// }
-
 int check_valid_path(char **map_copy, t_state *state)
 {
     int i = 0;
-    int j;
     while (state->map.board[i])
     {
-        j = 0;
+        int j = 0;
         while (state->map.board[i][j])
         {
             if (state->map.board[i][j] == 'C' || state->map.board[i][j] == 'E')
             {
-                if (map_copy[i][j] != 'F')
+                if (!map_copy[i] || map_copy[i][j] != 'F')
                     return (0);
             }
             j++;
@@ -59,20 +54,21 @@ int check_valid_path(char **map_copy, t_state *state)
 
 void flood_fill(char **tab, t_state *state, t_state begin)
 {
-    if (!tab || !state || begin.player.y < 0 || begin.player.x < 0 ||
+    if (!tab || !state || !state->map.board || 
+        state->map.height <= 0 || state->map.width <= 0 ||
+        begin.player.y < 0 || begin.player.x < 0 || 
         begin.player.y >= state->map.height || begin.player.x >= state->map.width)
     {
         ft_printf("Error: Invalid flood fill parameters\n");
         return;
     }
-    
     fill(tab, state->map.height, state->map.width, begin.player.y, begin.player.x);
 
     // Geçerli yol kontrolü
     if (!check_valid_path(tab, state))
     {
-        free_map(tab ,state->map.height);
-        free_map(state->map.board,state->map.height);
+        free_map(tab, state->map.height);
+        free_map(state->map.board, state->map.height);
 
         ft_printf("Error: Invalid map path\n");
         exit(EXIT_FAILURE);
@@ -81,18 +77,26 @@ void flood_fill(char **tab, t_state *state, t_state begin)
 
 char **copy_map(char **original, int height)
 {
-    char **copy = malloc(sizeof(char *) * (height + 1));
+    char **copy = calloc(height + 1, sizeof(char *));
     if (!copy)
         return NULL;
 
-    for (int i = 0; i < height; i++)
+    int i = 0;
+    while (i < height)
     {
+        if (!original[i])
+        {
+            free_map(copy, i); // Hata durumunda temizleme
+            return NULL;
+        }
+
         copy[i] = ft_strdup(original[i]);
         if (!copy[i])
         {
             free_map(copy, i); // Hata durumunda temizleme
             return NULL;
         }
+        i++;
     }
     copy[height] = NULL;
     return copy;
@@ -100,7 +104,11 @@ char **copy_map(char **original, int height)
 
 void free_map(char **map, int height)
 {
-    for (int i = 0; i < height; i++)
+    int i = 0;
+    while (i < height)
+    {
         free(map[i]);
+        i++;
+    }
     free(map);
 }
