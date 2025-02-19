@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/18 18:46:47 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 15:13:40 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void read_map(char *map, t_state *state)
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 	{
+		
 		perror("Error opening map file");
 		exit(EXIT_FAILURE);
 	}
@@ -74,6 +75,8 @@ void read_map(char *map, t_state *state)
 		arr[j] = ft_strdup(line);
 		if (arr[j] == NULL)
 		{
+			// free(arr[j]);
+			// free_map(arr,state->map.height);
 			perror("Memory allocation failed for line copy");
 			exit(EXIT_FAILURE);
 		}
@@ -150,6 +153,9 @@ void check_screen_size(t_state *state)
 	if (state->map.map_size_width > state->screen.screen_width || 
 		state->map.map_size_height > state->screen.screen_height)
 	{
+		free_map_err(state);
+		mlx_destroy_display(state->mlx);
+		free(state->mlx);
 		ft_printf("Error: Map is too big for screen resolution\n");
 		exit(EXIT_FAILURE);
 	}
@@ -167,18 +173,16 @@ void map_checker(char *map, t_state *state)
 		ft_printf("Error: Map copy failed.\n");
 		exit(EXIT_FAILURE);
 	}
-
 	game_map_locations(state);
 	begin.player.x = state->player.x;
 	begin.player.y = state->player.y;
 	
 	flood_fill(map_copy, state, begin);
-
+	free_map(map_copy, state->map.height);
 	wall_control(state);
 	is_space(state);
 	is_missing(state);
 	is_any_char(state);
 	cpe_counter(state);
 	map_size(state);
-	free_map(map_copy, state->map.height);
 }

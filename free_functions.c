@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:40:52 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/18 18:46:03 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 14:00:50 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,4 @@ void free_map_err(t_state *state)
         i++;
     }
     free(state->map.board);
-    free(state);
 }

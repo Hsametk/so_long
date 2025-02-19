@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:39 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/14 18:25:11 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:22:12 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int dest_win(t_state *state)
 
     mlx_destroy_window(state->mlx, state->win);
     if (state->mlx)
-         mlx_destroy_display(state->mlx);
+        mlx_destroy_display(state->mlx);
     free(state->mlx);
     while (state->map.board[i])
     {

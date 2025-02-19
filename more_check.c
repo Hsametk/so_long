@@ -6,7 +6,7 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:06:48 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/18 18:45:19 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 12:46:59 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void is_space(t_state *state)
                     state->map.board[i][j - 1] == '\0' || state->map.board[i - 1][j] == ' ' || state->map.board[i + 1][j] == ' ' ||
                     state->map.board[i][j - 1] == ' ' || state->map.board[i][j + 1] == ' ')
                 {
+                    free_map_err(state);
                     errno = EINVAL;
                     perror("Map contains invalid spaces.");
                     exit(EXIT_FAILURE);
@@ -88,7 +89,8 @@ void is_missing(t_state *state)
         // Eğer satır uzunluğu ilk satırdan farklıysa, hata ver
         if (len != first_len && state->map.height != i + 1)
         {
-            ft_printf("1Error: Map must be rectangular\n");
+            free_map_err(state);
+            ft_printf("Error: Map must be rectangular\n");
             exit(EXIT_FAILURE);
         }
         i++;
@@ -99,7 +101,8 @@ void is_missing(t_state *state)
     // Eğer son satırın uzunluğu diğer satırlardan farklıysa, hata ver
     if (len+1 != first_len) // \n olmadığğı için
     {
-        ft_printf("2Error: Map must be rectangular\n");
+        free_map_err(state);   
+        ft_printf("Error: Map must be rectangular\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -120,6 +123,7 @@ void is_any_char(t_state *state)
                 state->map.board[i][j] != 'E' && state->map.board[i][j] != '0' && 
                 state->map.board[i][j] != '1' && state->map.board[i][j] != '\n')
             {
+                free_map_err(state);
                 errno = EINVAL;
                 perror("There is a misplaced character on the map.");
                 exit(EXIT_FAILURE);
@@ -157,5 +161,9 @@ void	cpe_counter(t_state *state)
         i++;
 	}
 	if (player != 1 || exit != 1 || state->collectibles == 0)
+    {
+        free_map_err(state);   
 		error_message_for_counter("There is a problem with the number of C,P or E");
+        
+    }
 }
