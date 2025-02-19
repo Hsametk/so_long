@@ -6,16 +6,16 @@
 /*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 16:16:53 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:51:33 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "fcntl.h"
 
-static void check_file(t_state *map)
+static void	check_file(t_state *map)
 {
-	size_t len;
+	size_t	len;
 
 	len = ft_strlen(map->map.filename);
 	if (map->map.filename[len - 1] != 'r')
@@ -30,21 +30,19 @@ static void check_file(t_state *map)
 
 void read_map(char *map, t_state *state)
 {
-	char **arr;
-	int fd;
-	int line_count;
-	char *line;
+	char	**arr;
+	char	*line;
+	int		fd;
+	int		line_count;
 
 	state->player.moves = 0;
 	arr = NULL;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 	{
-		
 		perror("Error opening map file");
 		exit(EXIT_FAILURE);
 	}
-
 	line_count = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
@@ -53,14 +51,12 @@ void read_map(char *map, t_state *state)
 	}
 	state->map.height = line_count;
 	close(fd);
-
 	arr = malloc(sizeof(char *) * (line_count + 1));
 	if (!arr)
 	{
 		perror("Memory allocation failed");
 		exit(EXIT_FAILURE);
 	}
-
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 	{
@@ -68,15 +64,12 @@ void read_map(char *map, t_state *state)
 		free(arr);
 		exit(EXIT_FAILURE);
 	}
-
 	int j = 0;
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		arr[j] = ft_strdup(line);
 		if (arr[j] == NULL)
 		{
-			// free(arr[j]);
-			// free_map(arr,state->map.height);
 			perror("Memory allocation failed for line copy");
 			exit(EXIT_FAILURE);
 		}
@@ -85,9 +78,7 @@ void read_map(char *map, t_state *state)
 	}
 	arr[j] = NULL;
 	close(fd);
-
 	state->map.board = arr;
-
 	if (line_count > 0)
 	{
 		state->map.width = ft_strlen(arr[0]);
@@ -95,14 +86,12 @@ void read_map(char *map, t_state *state)
 			state->map.width--;
 	}
 }
-
-
-void game_map_locations(t_state *state)
+void	game_map_locations(t_state *state)
 {
-	int i;
-	int j;
-	i = 0;
+	int	i;
+	int	j;
 
+	i = 0;
 	while (state->map.board[i])
 	{
 		j = 0;
@@ -128,14 +117,13 @@ void game_map_locations(t_state *state)
 	}
 }
 
-void map_size(t_state *state)
+void	map_size(t_state *state)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	if (!state || !state->map.board)
-		return;
-
+		return (0);
 	i = 0;
 	while (state->map.board[i])
 	{
@@ -146,11 +134,11 @@ void map_size(t_state *state)
 			state->map.map_size_width = (j * 32) - 32;
 		i++;
 	}
-	state->map.map_size_height = i * 32; 
+	state->map.map_size_height = i * 32;
 }
-void check_screen_size(t_state *state)
+void	check_screen_size(t_state *state)
 {
-	if (state->map.map_size_width > state->screen.screen_width || 
+	if (state->map.map_size_width > state->screen.screen_width ||
 		state->map.map_size_height > state->screen.screen_height)
 	{
 		free_map_err(state);
@@ -160,13 +148,12 @@ void check_screen_size(t_state *state)
 		exit(EXIT_FAILURE);
 	}
 }
-void map_checker(char *map, t_state *state)
+void	map_checker(char *map, t_state *state)
 {
-	t_state begin;
+	t_state	begin;
 
 	check_file(state);
 	read_map(map, state);
-	
 	char **map_copy = copy_map(state->map.board, state->map.height);
 	if (!map_copy)
 	{
@@ -176,7 +163,6 @@ void map_checker(char *map, t_state *state)
 	game_map_locations(state);
 	begin.player.x = state->player.x;
 	begin.player.y = state->player.y;
-	
 	flood_fill(map_copy, state, begin);
 	free_map(map_copy, state->map.height);
 	wall_control(state);

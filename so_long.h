@@ -89,6 +89,7 @@ typedef struct s_state
 	t_screen screen;
 } t_state;
 
+int initialize_state(char *filename, t_state *state);
 void	map_checker(char *map, t_state *my_map);
 //void	flood_fill(char **tab, t_state size, t_state begin);
 void flood_fill(char **tab, t_state *state, t_state begin);
