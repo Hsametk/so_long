@@ -12,18 +12,18 @@
 
 #include "so_long.h"
 
-void	fill(char **tab, int height, int width, int row, int col)
+static void	fill_recursive(char **tab, t_state *state, int row, int col)
 {
-	if (!tab || row < 0 || col < 0 || row >= height
+	if (!tab || row < 0 || col < 0 || row >= state->map.height
 		|| !tab[row] || col >= (int)ft_strlen(tab[row]))
 		return ;
 	if (tab[row][col] == '1' || tab[row][col] == 'F')
 		return ;
 	tab[row][col] = 'F';
-	fill(tab, height, width, row - 1, col);
-	fill(tab, height, width, row + 1, col);
-	fill(tab, height, width, row, col - 1);
-	fill(tab, height, width, row, col + 1);
+	fill_recursive(tab, state, row - 1, col);
+	fill_recursive(tab, state, row + 1, col);
+	fill_recursive(tab, state, row, col - 1);
+	fill_recursive(tab, state, row, col + 1);
 }
 
 int	check_valid_path(char **map_copy, t_state *state)
@@ -51,8 +51,12 @@ int	check_valid_path(char **map_copy, t_state *state)
 
 void	flood_fill(char **tab, t_state *state, t_state begin)
 {
-	if (!tab || !state || !state->map.board
-		|| state->map.height <= 0 || state->map.width <= 0
+	if (!tab || !state || !state->map.board)
+	{
+		ft_printf("Error: Invalid flood fill parameters\n");
+		return ;
+	}
+	if (state->map.height <= 0 || state->map.width <= 0
 		|| begin.player.y < 0 || begin.player.x < 0
 		|| begin.player.y >= state->map.height
 		|| begin.player.x >= state->map.width)
@@ -60,7 +64,7 @@ void	flood_fill(char **tab, t_state *state, t_state begin)
 		ft_printf("Error: Invalid flood fill parameters\n");
 		return ;
 	}
-	fill (tab, state->map.height, state->map.width, begin.player.y, begin.player.x);
+	fill_recursive(tab, state, begin.player.y, begin.player.x);
 	if (!check_valid_path(tab, state))
 	{
 		free_map(tab, state->map.height);

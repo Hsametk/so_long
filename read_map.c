@@ -12,35 +12,56 @@
 
 #include "so_long.h"
 
-void	read_map(char *map, t_state *state)
+static int	count_lines(char *map)
 {
-	char	**arr;
 	char	*line;
 	int		fd;
-	int		line_count;
+	int		count;
 
-	state->player.moves = 0;
-	arr = NULL;
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 	{
 		perror("Error opening map file");
 		exit(EXIT_FAILURE);
 	}
-	line_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	count = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		line_count++;
+		count++;
 		free(line);
+		line = get_next_line(fd);
 	}
-	state->map.height = line_count;
 	close(fd);
+	return (count);
+}
+
+static char	**allocate_map(int line_count)
+{
+	char	**arr;
+
 	arr = malloc(sizeof(char *) * (line_count + 1));
 	if (!arr)
 	{
 		perror("Memory allocation failed");
 		exit(EXIT_FAILURE);
 	}
+	return (arr);
+}
+
+static void	handle_line_error(char **arr, int j)
+{
+	perror("Memory allocation failed for line copy");
+	free_map(arr, j);
+	exit(EXIT_FAILURE);
+}
+
+static void	fill_map(char *map, char **arr)
+{
+	char	*line;
+	int		fd;
+	int		j;
+
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 	{
@@ -48,25 +69,34 @@ void	read_map(char *map, t_state *state)
 		free(arr);
 		exit(EXIT_FAILURE);
 	}
-	int j = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	j = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		arr[j] = ft_strdup(line);
-		if (arr[j] == NULL)
-		{
-			perror("Memory allocation failed for line copy");
-			exit(EXIT_FAILURE);
-		}
+		if (!arr[j])
+			handle_line_error(arr, j);
 		free(line);
 		j++;
+		line = get_next_line(fd);
 	}
 	arr[j] = NULL;
 	close(fd);
-	state->map.board = arr;
+}
+
+void	read_map(char *map, t_state *state)
+{
+	int		line_count;
+
+	state->player.moves = 0;
+	line_count = count_lines(map);
+	state->map.height = line_count;
+	state->map.board = allocate_map(line_count);
+	fill_map(map, state->map.board);
 	if (line_count > 0)
 	{
-		state->map.width = ft_strlen(arr[0]);
-		if (arr[0][state->map.width - 1] == '\n')
+		state->map.width = ft_strlen(state->map.board[0]);
+		if (state->map.board[0][state->map.width - 1] == '\n')
 			state->map.width--;
 	}
 }

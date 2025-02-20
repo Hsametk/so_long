@@ -60,67 +60,35 @@ int	check_next_position(t_state *state, int next_y, int next_x)
 	return (1);
 }
 
+static int	try_move(t_state *state, int next_y, int next_x)
+{
+	if (state->map.board[next_y][next_x] != '1')
+	{
+		if (check_next_position(state, next_y, next_x))
+		{
+			state->map.board[state->player.y][state->player.x] = '0';
+			state->map.board[next_y][next_x] = 'P';
+			state->player.y = next_y;
+			state->player.x = next_x;
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	move_player(int key, t_state *state)
 {
 	int	moved;
 
 	moved = 0;
-	if (key == KEY_W)
-	{
-		if (state->player.y - 1 > 0
-			&& state->map.board[state->player.y - 1][state->player.x] != '1')
-		{
-			if (check_next_position(state, state->player.y - 1, state->player.x))
-			{
-				state->map.board[state->player.y][state->player.x] = '0';
-				state->map.board[state->player.y - 1][state->player.x] = 'P';
-				state->player.y -= 1;
-				moved = 1;
-			}
-		}
-	}
-	if (key == KEY_A)
-	{
-		if (state->player.x - 1 > 0
-			&& state->map.board[state->player.y][state->player.x - 1] != '1')
-		{
-			if (check_next_position(state, state->player.y, state->player.x - 1))
-			{
-				state->map.board[state->player.y][state->player.x] = '0';
-				state->map.board[state->player.y][state->player.x - 1] = 'P';
-				state->player.x -= 1;
-				moved = 1;
-			}
-		}
-	}
-	if (key == KEY_S)
-	{
-		if (state->player.y + 1 < state->map.height
-			&& state->map.board[state->player.y + 1][state->player.x] != '1')
-		{
-			if (check_next_position(state, state->player.y + 1, state->player.x))
-			{
-				state->map.board[state->player.y][state->player.x] = '0';
-				state->map.board[state->player.y + 1][state->player.x] = 'P';
-				state->player.y += 1;
-				moved = 1;
-			}
-		}
-	}
-	if (key == KEY_D)
-	{
-		if (state->player.x + 1 < state->map.width
-			&& state->map.board[state->player.y][state->player.x + 1] != '1')
-		{
-			if (check_next_position(state, state->player.y, state->player.x + 1))
-			{
-				state->map.board[state->player.y][state->player.x] = '0';
-				state->map.board[state->player.y][state->player.x + 1] = 'P';
-				state->player.x += 1;
-				moved = 1;
-			}
-		}
-	}
+	if (key == KEY_W && state->player.y - 1 > 0)
+		moved = try_move(state, state->player.y - 1, state->player.x);
+	if (key == KEY_A && state->player.x - 1 > 0)
+		moved = try_move(state, state->player.y, state->player.x - 1);
+	if (key == KEY_S && state->player.y + 1 < state->map.height)
+		moved = try_move(state, state->player.y + 1, state->player.x);
+	if (key == KEY_D && state->player.x + 1 < state->map.width)
+		moved = try_move(state, state->player.y, state->player.x + 1);
 	if (moved)
 	{
 		state->player.moves++;

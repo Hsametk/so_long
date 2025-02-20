@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:10:06 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/03 17:27:08 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 16:27:36 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-static char *extract_line(char *line)
+static char	*extract_line(char *line)
 {
 	size_t	i;
 	char	*backup;
-	
+
 	i = 0;
 	while (line[i] != '\n' && line[i] != '\0')
 		i++;
@@ -30,13 +30,13 @@ static char *extract_line(char *line)
 		backup = NULL;
 	}
 	line[i + 1] = '\0';
-	return(backup);
+	return (backup);
 }
 
-static char *read_line(int fd, char *buf, char *backup)
+static char	*read_line(int fd, char *buf, char *backup)
 {
-    char *temp;
-    int read_count;
+	char	*temp;
+	int		read_count;
 
 	read_count = 1;
 	while (read_count != '\0')
@@ -47,33 +47,33 @@ static char *read_line(int fd, char *buf, char *backup)
 		else if (read_count == 0)
 			break ;
 		buf[read_count] = '\0';
-		if(!backup)
+		if (!backup)
 			backup = ft_strdup_two("");
 		temp = backup;
 		backup = ft_strjoin(temp, buf);
 		free(temp);
 		temp = NULL;
 		if (ft_strchr(backup, '\n'))
-			break;
+			break ;
 	}
 	return (backup);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*backup;
 	char		*buf;
 	char		*line;
-	
+
 	if (BUFFER_SIZE < 0 || fd < 0)
 		return (NULL);
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
 		return (0);
-	line = read_line(fd, buf ,backup);
+	line = read_line(fd, buf, backup);
 	free(buf);
 	buf = NULL;
-	if(!line)
+	if (!line)
 		return (NULL);
 	backup = extract_line(line);
 	return (line);

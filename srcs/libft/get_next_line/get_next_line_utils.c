@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:21:22 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/03 17:28:56 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 16:32:39 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*ft_strchr(const char *s, int c)
 		return ((char *)&s[i]);
 	return (NULL);
 }
+
 size_t	ft_strlen_two(const char *s)
 {
 	size_t	i;
@@ -54,6 +55,7 @@ size_t	ft_strlen_two(const char *s)
 		i++;
 	return (i);
 }
+
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
@@ -62,7 +64,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	new_s = (char *) malloc((ft_strlen_two(s1) + ft_strlen_two(s2) + 1) * sizeof(char));
+	new_s = (char *) malloc((ft_strlen_two(s1) + ft_strlen_two(s2) + 1)
+			* sizeof(char));
 	if (!new_s)
 		return (NULL);
 	while (s1[i])

@@ -18,9 +18,12 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2 || !initialize_state(argv[1], &state))
 		return (EXIT_FAILURE);
-	mlx_get_screen_size(state.mlx, &state.screen.screen_width, &state.screen.screen_height);
+	mlx_get_screen_size(state.mlx, &state.screen.screen_width,
+		&state.screen.screen_height);
 	check_screen_size(&state);
-	if (!(state.win = mlx_new_window(state.mlx, state.map.map_size_width, state.map.map_size_height, "./so_long")))
+	state.win = mlx_new_window(state.mlx, state.map.map_size_width,
+	state.map.map_size_height, "./so_long");
+	if (!state.win)
 		return (EXIT_FAILURE);
 	put_image(&state);
 	put_screen(&state);
@@ -37,7 +40,7 @@ int	initialize_state(char *filename, t_state *state)
 	state->mlx = mlx_init();
 	if (!state->mlx)
 	{
-		perror ("Failed to initialize MLX");
+		perror("Failed to initialize MLX");
 		return (0);
 	}
 	return (1);
