@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:28:08 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 17:55:13 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:46:57 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@ void	put_image(t_state *state)
 		ft_printf("Failed to upload the image");
 }
 
+void	write_image(t_state *state, void *img, int x, int y)
+{
+	mlx_put_image_to_window(state->mlx, state->win, img, x * 32, y * 32);
+}
+
 void	put_screen(t_state *state)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	char	tile;
 
 	y = 0;
 	while (state->map.board[y])
@@ -43,18 +49,20 @@ void	put_screen(t_state *state)
 		x = 0;
 		while (state->map.board[y][x])
 		{
-			if (state->map.board[y][x] == '1')
-				mlx_put_image_to_window(state->mlx, state->win, state->imgs.w, x * 32, y * 32);
-			if (state->map.board[y][x] == 'P')
-				mlx_put_image_to_window(state->mlx, state->win, state->imgs.p, x * 32, y * 32);
-			if (state->map.board[y][x] == 'C')
-				mlx_put_image_to_window(state->mlx, state->win, state->imgs.c, x * 32, y * 32);
-			if (state->map.board[y][x] == 'E')
-                mlx_put_image_to_window(state->mlx, state->win, state->imgs.e, x * 32, y * 32);
-			if (state->map.board[y][x] == '0')
-			mlx_put_image_to_window(state->mlx, state->win, state->imgs.f, x * 32, y * 32);
+			tile = state->map.board[y][x];
+			if (tile == '1')
+				write_image(state, state->imgs.w, x, y);
+			else if (tile == 'P')
+				write_image(state, state->imgs.p, x, y);
+			else if (tile == 'C')
+				write_image(state, state->imgs.c, x, y);
+			else if (tile == 'E')
+				write_image(state, state->imgs.e, x, y);
+			else if (tile == '0')
+				write_image(state, state->imgs.f, x, y);
 			x++;
 		}
 		y++;
 	}
 }
+

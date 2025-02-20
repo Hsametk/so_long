@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 17:51:33 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:37:17 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,64 +28,6 @@ static void	check_file(t_state *map)
 		error_filename();
 }
 
-void read_map(char *map, t_state *state)
-{
-	char	**arr;
-	char	*line;
-	int		fd;
-	int		line_count;
-
-	state->player.moves = 0;
-	arr = NULL;
-	fd = open(map, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error opening map file");
-		exit(EXIT_FAILURE);
-	}
-	line_count = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		line_count++;
-		free(line);
-	}
-	state->map.height = line_count;
-	close(fd);
-	arr = malloc(sizeof(char *) * (line_count + 1));
-	if (!arr)
-	{
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
-	}
-	fd = open(map, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error reopening map file");
-		free(arr);
-		exit(EXIT_FAILURE);
-	}
-	int j = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		arr[j] = ft_strdup(line);
-		if (arr[j] == NULL)
-		{
-			perror("Memory allocation failed for line copy");
-			exit(EXIT_FAILURE);
-		}
-		free(line);
-		j++;
-	}
-	arr[j] = NULL;
-	close(fd);
-	state->map.board = arr;
-	if (line_count > 0)
-	{
-		state->map.width = ft_strlen(arr[0]);
-		if (arr[0][state->map.width - 1] == '\n')
-			state->map.width--;
-	}
-}
 void	game_map_locations(t_state *state)
 {
 	int	i;
@@ -123,7 +65,7 @@ void	map_size(t_state *state)
 	int	j;
 
 	if (!state || !state->map.board)
-		return (0);
+		return ;
 	i = 0;
 	while (state->map.board[i])
 	{
@@ -136,10 +78,11 @@ void	map_size(t_state *state)
 	}
 	state->map.map_size_height = i * 32;
 }
+
 void	check_screen_size(t_state *state)
 {
-	if (state->map.map_size_width > state->screen.screen_width ||
-		state->map.map_size_height > state->screen.screen_height)
+	if (state->map.map_size_width > state->screen.screen_width
+		||state->map.map_size_height > state->screen.screen_height)
 	{
 		free_map_err(state);
 		mlx_destroy_display(state->mlx);
@@ -148,13 +91,15 @@ void	check_screen_size(t_state *state)
 		exit(EXIT_FAILURE);
 	}
 }
+
 void	map_checker(char *map, t_state *state)
 {
 	t_state	begin;
+	char	**map_copy;
 
 	check_file(state);
 	read_map(map, state);
-	char **map_copy = copy_map(state->map.board, state->map.height);
+	map_copy = copy_map(state->map.board, state->map.height);
 	if (!map_copy)
 	{
 		ft_printf("Error: Map copy failed.\n");

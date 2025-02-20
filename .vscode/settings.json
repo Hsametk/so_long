@@ -2,7 +2,8 @@
     "files.associations": {
         "so_long": "c",
         "so_long.h": "c",
-        "random": "c"
+        "random": "c",
+        "get_next_line.h": "c"
     },
     "makefile.configureOnOpen": true
 }

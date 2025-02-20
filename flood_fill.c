@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 16:16:22 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 18:04:09 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:48:00 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	fill(char **tab, int height, int width, int row, int col)
 {
-	if (!tab || row < 0 || col < 0 || row >= height || !tab[row] || col >= (int)ft_strlen(tab[row]))
-		return (0);
+	if (!tab || row < 0 || col < 0 || row >= height
+		|| !tab[row] || col >= (int)ft_strlen(tab[row]))
+		return ;
 	if (tab[row][col] == '1' || tab[row][col] == 'F')
-		return (0);
+		return ;
 	tab[row][col] = 'F';
 	fill(tab, height, width, row - 1, col);
 	fill(tab, height, width, row + 1, col);
@@ -57,7 +58,7 @@ void	flood_fill(char **tab, t_state *state, t_state begin)
 		|| begin.player.x >= state->map.width)
 	{
 		ft_printf("Error: Invalid flood fill parameters\n");
-		return (0);
+		return ;
 	}
 	fill (tab, state->map.height, state->map.width, begin.player.y, begin.player.x);
 	if (!check_valid_path(tab, state))
@@ -71,8 +72,10 @@ void	flood_fill(char **tab, t_state *state, t_state begin)
 
 char	**copy_map(char **original, int height)
 {
-	int	i;
-	char **copy = calloc(height + 1, sizeof(char *));
+	int		i;
+	char	**copy;
+
+	copy = calloc(height + 1, sizeof(char *));
 
 	if (!copy)
 		return (NULL);
@@ -81,13 +84,13 @@ char	**copy_map(char **original, int height)
 	{
 		if (!original[i])
 		{
-			free_map(copy, i); // Hata durumunda temizleme
+			free_map(copy, i);
 			return (NULL);
 		}
 		copy[i] = ft_strdup(original[i]);
 		if (!copy[i])
 		{
-			free_map(copy, i); // Hata durumunda temizleme
+			free_map(copy, i);
 			return (NULL);
 		}
 		i++;

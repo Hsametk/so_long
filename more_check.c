@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   more_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 11:06:48 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 17:30:20 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:50:55 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,10 @@ void	is_space(t_state *state)
 			if (state->map.board[i][j] == ' ')
 			{
 				if (i == 0 || j == 0 || state->map.board[i + 1] == NULL
-				|| state->map.board[i][j + 1] == '\0' || state->map.board[i - 1][j] == '\0' ||
-				state->map.board[i][j - 1] == '\0' || state->map.board[i - 1][j] == ' ' || state->map.board[i + 1][j] == ' ' ||
-				state->map.board[i][j - 1] == ' ' || state->map.board[i][j + 1] == ' ')
+					|| state->map.board[i][j + 1] == '\0' || state->map.board[i - 1][j] == '\0'
+					||state->map.board[i][j - 1] == '\0' || state->map.board[i - 1][j] == ' '
+					|| state->map.board[i + 1][j] == ' ' || state->map.board[i][j - 1] == ' '
+					|| state->map.board[i][j + 1] == ' ')
 				{
 					free_map_err(state);
 					errno = EINVAL;
@@ -69,6 +70,7 @@ void	is_space(t_state *state)
 		i++;
 	}
 }
+
 void	is_missing(t_state *state)
 {
 	int	i;
@@ -77,9 +79,9 @@ void	is_missing(t_state *state)
 
 	i = 0;
 	if (!state->map.board[0])
-		return(0);
+		return ;
 	first_len = ft_strlen(state->map.board[0]);
-    while (state->map.board[i])
+	while (state->map.board[i])
 	{
 		len = ft_strlen(state->map.board[i]);
 		if (len != first_len && state->map.height != i + 1)
@@ -91,7 +93,7 @@ void	is_missing(t_state *state)
 		i++;
 	}
 	len = ft_strlen(state->map.board[state->map.height - 1]);
-	if (len + 1 != first_len) // \n olmadığından
+	if (len + 1 != first_len)
 	{
 		free_map_err(state);
 		ft_printf("Error: Map must be rectangular\n");
@@ -116,9 +118,11 @@ void	is_any_char(t_state *state)
 		j = 0;
 		while (state->map.board[i][j])
 		{
-			if (state->map.board[i][j] != 'C' && state->map.board[i][j] != 'P' && 
-			state->map.board[i][j] != 'E' && state->map.board[i][j] != '0' && 
-            state->map.board[i][j] != '1' && state->map.board[i][j] != '\n')
+			if (state->map.board[i][j] != 'C' && state->map.board[i][j] != 'P'
+				&& state->map.board[i][j] != 'E'
+				&& state->map.board[i][j] != '0'
+				&& state->map.board[i][j] != '1'
+				&& state->map.board[i][j] != '\n')
 			{
 				free_map_err(state);
 				errno = EINVAL;

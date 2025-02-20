@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:27:39 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/19 18:15:28 by hakotu           ###   ########.fr       */
+/*   Updated: 2025/02/20 13:50:20 by samcu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,21 @@ int	check_next_position(t_state *state, int next_y, int next_x)
 	{
 		if (state->collectibles == 0)
 		{
-			state->player.moves++;  // Son hareketi de sayıyoruz
+			state->player.moves++;
 			ft_printf("Moves: %d\n", state->player.moves);
 			ft_printf("Game completed! All collectibles collected.\n");
 			dest_win(state);
 		}
-		return (0);  // Exit'e gelince hareket etme
+		return (0);
 	}
 	return (1);
 }
+
 void	move_player(int key, t_state *state)
 {
-    int moved;
-	
-	moved = 0;  // Hareket gerçekleşti mi kontrolü
+	int	moved;
+
+	moved = 0;
 	if (key == KEY_W)
 	{
 		if (state->player.y - 1 > 0
@@ -74,27 +75,27 @@ void	move_player(int key, t_state *state)
 				state->map.board[state->player.y][state->player.x] = '0';
 				state->map.board[state->player.y - 1][state->player.x] = 'P';
 				state->player.y -= 1;
-				moved = 1;  // Hareket gerçekleşti
+				moved = 1;
 			}
 		}
 	}
 	if (key == KEY_A)
-    {
-		if (state->player.x - 1 > 0 
-		&& state->map.board[state->player.y][state->player.x - 1] != '1')
+	{
+		if (state->player.x - 1 > 0
+			&& state->map.board[state->player.y][state->player.x - 1] != '1')
 		{
 			if (check_next_position(state, state->player.y, state->player.x - 1))
 			{
 				state->map.board[state->player.y][state->player.x] = '0';
 				state->map.board[state->player.y][state->player.x - 1] = 'P';
 				state->player.x -= 1;
-				moved = 1;  // Hareket gerçekleşti
+				moved = 1;
 			}
 		}
 	}
 	if (key == KEY_S)
 	{
-		if (state->player.y + 1 < state->map.height 
+		if (state->player.y + 1 < state->map.height
 			&& state->map.board[state->player.y + 1][state->player.x] != '1')
 		{
 			if (check_next_position(state, state->player.y + 1, state->player.x))
@@ -102,7 +103,7 @@ void	move_player(int key, t_state *state)
 				state->map.board[state->player.y][state->player.x] = '0';
 				state->map.board[state->player.y + 1][state->player.x] = 'P';
 				state->player.y += 1;
-				moved = 1;  // Hareket gerçekleşti
+				moved = 1;
 			}
 		}
 	}
@@ -116,7 +117,7 @@ void	move_player(int key, t_state *state)
 				state->map.board[state->player.y][state->player.x] = '0';
 				state->map.board[state->player.y][state->player.x + 1] = 'P';
 				state->player.x += 1;
-				moved = 1;  // Hareket gerçekleşti
+				moved = 1;
 			}
 		}
 	}
