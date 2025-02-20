@@ -65,4 +65,3 @@ void	put_screen(t_state *state)
 		y++;
 	}
 }
-

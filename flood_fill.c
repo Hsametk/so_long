@@ -76,7 +76,6 @@ char	**copy_map(char **original, int height)
 	char	**copy;
 
 	copy = calloc(height + 1, sizeof(char *));
-
 	if (!copy)
 		return (NULL);
 	i = 0;

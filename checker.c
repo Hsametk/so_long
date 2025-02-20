@@ -33,11 +33,11 @@ void	game_map_locations(t_state *state)
 	int	i;
 	int	j;
 
-	i = 0;
-	while (state->map.board[i])
+	i = -1;
+	while (state->map.board[++i])
 	{
-		j = 0;
-		while (state->map.board[i][j])
+		j = -1;
+		while (state->map.board[i][++j])
 		{
 			if (state->map.board[i][j] == 'P')
 			{
@@ -50,12 +50,8 @@ void	game_map_locations(t_state *state)
 				state->exit.y = j;
 			}
 			if (state->map.board[i][j] == 'C')
-			{
 				state->collectibles += 1;
-			}
-			j++;
 		}
-		i++;
 	}
 }
 

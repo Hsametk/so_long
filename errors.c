@@ -25,6 +25,5 @@ void	error_message_for_counter(char *str)
 		write(1, str, 1);
 		str++;
 	}
-	//todo
 	exit(EXIT_FAILURE);
 }
