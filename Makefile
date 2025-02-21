@@ -62,7 +62,7 @@ SRC=so_long.c checker.c errors.c flood_fill.c create_image.c key_hook.c more_che
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(FT_PRINTF) $(MINILIBX)
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME) $(LIB_FLAGS) $(FT_PRINTF_LIB_FLAGS) $(FT_LIBFT_LIB_FLAGS)
+	$(CC) $(CFLAGS) -fsanitize=address -g $(SRC) -o $(NAME) $(LIB_FLAGS) $(FT_PRINTF_LIB_FLAGS) $(FT_LIBFT_LIB_FLAGS)
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)

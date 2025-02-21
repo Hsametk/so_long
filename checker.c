@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: samcu <samcu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hakotu <hakotu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:30:03 by hakotu            #+#    #+#             */
-/*   Updated: 2025/02/20 13:37:17 by samcu            ###   ########.fr       */
+/*   Updated: 2025/02/21 16:54:16 by hakotu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "fcntl.h"
 
 static void	check_file(t_state *map)
 {
